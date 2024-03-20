@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  Kusto
 //
-//  Created by Kiet Truong on 20/03/2024.
+//  Created by Mac on 3/5/21.
 //
 
 import UIKit
@@ -10,10 +10,20 @@ import UIKit
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        // If first launch
+        if !UserDefaultsStore.hasLaunchBefore {
+            UserDefaultsStore.hasLaunchBefore = true
+            
+            // Add default main album
+            UserDefaultsStore.listAlbum.append(Album(name: "Main", photos: []))
+            
+            // Clear keychain
+            _ = KeychainWrapper.standard.removeAllKeys()
+        }
+        
         return true
     }
 
