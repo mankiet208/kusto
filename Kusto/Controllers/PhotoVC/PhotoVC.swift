@@ -134,6 +134,7 @@ extension PhotoVC {
         clvPhoto.allowsMultipleSelection = false
         clvPhoto.isEditing = false
         clvPhoto.backgroundColor = .clear
+        clvPhoto.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: viewBottomConstraint, right: 0)
     }
     
     private func showAddButton() {
