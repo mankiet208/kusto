@@ -1,20 +1,28 @@
 PODS:
   - BSImagePicker (3.3.1)
+  - Google-Mobile-Ads-SDK (11.2.0):
+    - GoogleUserMessagingPlatform (>= 1.1)
+  - GoogleUserMessagingPlatform (2.3.0)
   - Viewer (4.3.0)
 
 DEPENDENCIES:
   - BSImagePicker (~> 3.1)
+  - Google-Mobile-Ads-SDK
   - Viewer
 
 SPEC REPOS:
   trunk:
     - BSImagePicker
+    - Google-Mobile-Ads-SDK
+    - GoogleUserMessagingPlatform
     - Viewer
 
 SPEC CHECKSUMS:
   BSImagePicker: 0fe04b574d4d6b81093785d2af6c26227efc8428
+  Google-Mobile-Ads-SDK: 5a6d005a6cb5b5e8f4c7b69ca05cdea79c181139
+  GoogleUserMessagingPlatform: b1ad7bb1ee3ce64749d4fec24f667b36e45c396c
   Viewer: 2f770f3f78a903f6e4d31ead72bcaabc1a8576af
 
-PODFILE CHECKSUM: d163fc8464197c595333d5348f7068a0354ebfc5
+PODFILE CHECKSUM: 2da0d98ce7f7013b94ab0f0f895c5b413a1cad3a
 
 COCOAPODS: 1.15.2

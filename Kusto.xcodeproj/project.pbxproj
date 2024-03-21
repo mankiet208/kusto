@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -45,6 +45,8 @@
 		C35CFF232BAA9FA000E4965D /* KeychainItemAccessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = C35CFF222BAA9FA000E4965D /* KeychainItemAccessibility.swift */; };
 		C35CFF252BAA9FB800E4965D /* KeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C35CFF242BAA9FB800E4965D /* KeychainWrapper.swift */; };
 		C35CFF272BAABD4900E4965D /* KeychainKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C35CFF262BAABD4900E4965D /* KeychainKey.swift */; };
+		C39A8F772BAAEDDE0009524C /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = C39A8F762BAAEDDE0009524C /* FirebaseAnalytics */; };
+		C39A8F792BAAEE030009524C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C39A8F782BAAEE020009524C /* GoogleService-Info.plist */; };
 		C3B7982E2BA8418200D98EAF /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B7982D2BA8418200D98EAF /* Theme.swift */; };
 		C3B798302BA8497700D98EAF /* ToolBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B7982F2BA8497700D98EAF /* ToolBarView.swift */; };
 		C3B7983C2BA945B300D98EAF /* AuthVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B7983B2BA945B300D98EAF /* AuthVC.swift */; };
@@ -96,6 +98,7 @@
 		C35CFF222BAA9FA000E4965D /* KeychainItemAccessibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainItemAccessibility.swift; sourceTree = "<group>"; };
 		C35CFF242BAA9FB800E4965D /* KeychainWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainWrapper.swift; sourceTree = "<group>"; };
 		C35CFF262BAABD4900E4965D /* KeychainKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainKey.swift; sourceTree = "<group>"; };
+		C39A8F782BAAEE020009524C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C3B7982D2BA8418200D98EAF /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		C3B7982F2BA8497700D98EAF /* ToolBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolBarView.swift; sourceTree = "<group>"; };
 		C3B7983B2BA945B300D98EAF /* AuthVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthVC.swift; sourceTree = "<group>"; };
@@ -109,6 +112,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C39A8F772BAAEDDE0009524C /* FirebaseAnalytics in Frameworks */,
 				261D56D3CE4CBE4D28B2106E /* Pods_Kusto.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -314,6 +318,7 @@
 		C3B7983A2BA943F500D98EAF /* Config */ = {
 			isa = PBXGroup;
 			children = (
+				C39A8F782BAAEE020009524C /* GoogleService-Info.plist */,
 				047103F125F1D3C70095DA74 /* Assets.xcassets */,
 				047103F625F1D3C70095DA74 /* Info.plist */,
 			);
@@ -350,12 +355,16 @@
 				047103E225F1D3C50095DA74 /* Frameworks */,
 				047103E325F1D3C50095DA74 /* Resources */,
 				932622BA2FE2453EA2B671EA /* [CP] Embed Pods Frameworks */,
+				635144FC444B4841095966BB /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = Kusto;
+			packageProductDependencies = (
+				C39A8F762BAAEDDE0009524C /* FirebaseAnalytics */,
+			);
 			productName = PhotoLock;
 			productReference = 047103E525F1D3C50095DA74 /* Kusto.app */;
 			productType = "com.apple.product-type.application";
@@ -383,6 +392,9 @@
 				Base,
 			);
 			mainGroup = 047103DC25F1D3C50095DA74;
+			packageReferences = (
+				C39A8F752BAAEDDD0009524C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = 047103E625F1D3C50095DA74 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -402,12 +414,30 @@
 				047103F025F1D3C50095DA74 /* Main.storyboard in Resources */,
 				0471042425F224010095DA74 /* AlbumCell.xib in Resources */,
 				39D24DC2262831E60059A389 /* PhotoCell.xib in Resources */,
+				C39A8F792BAAEE030009524C /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		635144FC444B4841095966BB /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Kusto/Pods-Kusto-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Kusto/Pods-Kusto-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Kusto/Pods-Kusto-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		752E4D3A8CCDB072E1C8FAB0 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -705,6 +735,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C39A8F752BAAEDDD0009524C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C39A8F762BAAEDDE0009524C /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C39A8F752BAAEDDD0009524C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 047103DD25F1D3C50095DA74 /* Project object */;
 }
