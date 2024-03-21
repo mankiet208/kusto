@@ -48,6 +48,7 @@
 		C39A8F772BAAEDDE0009524C /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = C39A8F762BAAEDDE0009524C /* FirebaseAnalytics */; };
 		C39A8F792BAAEE030009524C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C39A8F782BAAEE020009524C /* GoogleService-Info.plist */; };
 		C39A8F7B2BABD9110009524C /* PermissionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39A8F7A2BABD9110009524C /* PermissionHelper.swift */; };
+		C39A8F7F2BAC3AA30009524C /* BiometricHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39A8F7E2BAC3AA30009524C /* BiometricHelper.swift */; };
 		C3B7982E2BA8418200D98EAF /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B7982D2BA8418200D98EAF /* Theme.swift */; };
 		C3B798302BA8497700D98EAF /* ToolBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B7982F2BA8497700D98EAF /* ToolBarView.swift */; };
 		C3B7983C2BA945B300D98EAF /* AuthVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B7983B2BA945B300D98EAF /* AuthVC.swift */; };
@@ -101,6 +102,7 @@
 		C35CFF262BAABD4900E4965D /* KeychainKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainKey.swift; sourceTree = "<group>"; };
 		C39A8F782BAAEE020009524C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C39A8F7A2BABD9110009524C /* PermissionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionHelper.swift; sourceTree = "<group>"; };
+		C39A8F7E2BAC3AA30009524C /* BiometricHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricHelper.swift; sourceTree = "<group>"; };
 		C3B7982D2BA8418200D98EAF /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		C3B7982F2BA8497700D98EAF /* ToolBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolBarView.swift; sourceTree = "<group>"; };
 		C3B7983B2BA945B300D98EAF /* AuthVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthVC.swift; sourceTree = "<group>"; };
@@ -226,6 +228,7 @@
 		0471049B25F722280095DA74 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				C39A8F7D2BAC3A7C0009524C /* Biometric */,
 				C39A8F7C2BABDF680009524C /* Permission */,
 				C35CFF212BAA9F8900E4965D /* Keychain */,
 				39D24DB3262830DD0059A389 /* UserDefault */,
@@ -324,6 +327,14 @@
 				C39A8F7A2BABD9110009524C /* PermissionHelper.swift */,
 			);
 			path = Permission;
+			sourceTree = "<group>";
+		};
+		C39A8F7D2BAC3A7C0009524C /* Biometric */ = {
+			isa = PBXGroup;
+			children = (
+				C39A8F7E2BAC3AA30009524C /* BiometricHelper.swift */,
+			);
+			path = Biometric;
 			sourceTree = "<group>";
 		};
 		C3B7983A2BA943F500D98EAF /* Config */ = {
@@ -509,6 +520,7 @@
 				0471040525F1EC2B0095DA74 /* AlbumVC.swift in Sources */,
 				C3B798432BA9A11300D98EAF /* PinCodeView.swift in Sources */,
 				C3B7983C2BA945B300D98EAF /* AuthVC.swift in Sources */,
+				C39A8F7F2BAC3AA30009524C /* BiometricHelper.swift in Sources */,
 				39D24DAE262830CA0059A389 /* DispatchQueue.swift in Sources */,
 				39D24DAD262830CA0059A389 /* Date+Extension.swift in Sources */,
 				39D24DC8262834D50059A389 /* SpinnerView.swift in Sources */,

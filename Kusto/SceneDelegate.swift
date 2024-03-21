@@ -42,11 +42,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to undo the changes made on entering the background.
         
         // Show authentication screen
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//        if let authVC = storyboard.instantiateViewController(withIdentifier: "AuthVC") as? AuthVC {
-//            authVC.modalPresentationStyle = .fullScreen
-//            window?.rootViewController!.present(authVC, animated: true, completion: nil)
-//        }
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let authVC = storyboard.instantiateViewController(withIdentifier: "AuthVC") as? AuthVC {
+            authVC.modalPresentationStyle = .fullScreen
+            window?.rootViewController!.present(authVC, animated: true, completion: nil)
+        }
     }
     
     func sceneDidEnterBackground(_ scene: UIScene) {
