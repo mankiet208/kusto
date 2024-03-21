@@ -14,7 +14,7 @@ struct AlbumCellViewModel {
     init(from model: Album) {
         self.name = model.name
         
-        if let image = model.photos.last?.toUIImage() {
+        if let image = model.photos.last?.image {
             self.avatarImage = image
         } else {
             self.avatarImage = nil

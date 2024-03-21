@@ -21,9 +21,9 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSFaceIDUsageDescription</key>
-	<string>This app need access to Face ID and Touch ID to authentication user</string>
+	<string>$(PRODUCT_NAME) need access to Face/Touch ID for authentication.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>This app need access to photo library</string>
+	<string>$(PRODUCT_NAME) need permission to add photos from library.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

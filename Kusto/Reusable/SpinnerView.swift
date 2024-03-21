@@ -27,7 +27,7 @@ class SpinnerVC: UIViewController {
         spinner.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     }
     
-    static func showSpinner(on vc: UIViewController) {
+    static func show(on vc: UIViewController) {
         let child = SpinnerVC.shared
         vc.addChild(child)
         child.view.frame = vc.view.frame
@@ -35,7 +35,7 @@ class SpinnerVC: UIViewController {
         child.didMove(toParent: vc)
     }
     
-    static func hideSpinner() {
+    static func hide() {
         let child = SpinnerVC.shared
         child.willMove(toParent: nil)
         child.view.removeFromSuperview()

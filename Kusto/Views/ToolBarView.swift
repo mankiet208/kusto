@@ -8,32 +8,32 @@
 import UIKit
 
 protocol ToolBarViewDelegate: AnyObject {
-    func didTapOptionButton()
-    func didTapRemoveButton()
+    func didTapShare(_ vc: UIViewController, items: [IndexPath])
+    func didTapDelete(_ vc: UIViewController, items: [IndexPath])
 }
 
 class ToolBarView: UIView {
     
     //MARK: - UI
     
-    lazy private var btnOption: UIButton = {
+    lazy private var btnShare: UIButton = {
         let button = UIButton(type: .custom)
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 23, weight: .regular, scale: .default)
         button.setImage(UIImage(systemName: "square.and.arrow.up", withConfiguration: imageConfig), for: .normal)
         button.imageView?.tintColor = .white
         button.imageView?.contentMode = .scaleAspectFit
-        button.addTarget(self, action: #selector(didTapOptionButton), for: .touchUpInside)
+        button.addTarget(self, action: #selector(didTapShareButton), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
-    lazy private var btnRemove: UIButton = {
+    lazy private var btnDelete: UIButton = {
         let button = UIButton(type: .custom)
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 23, weight: .regular, scale: .default)
         button.setImage(UIImage(systemName: "trash", withConfiguration: imageConfig), for: .normal)
         button.imageView?.tintColor = .white
         button.imageView?.contentMode = .scaleAspectFit
-        button.addTarget(self, action: #selector(didTapRemoveButton), for: .touchUpInside)
+        button.addTarget(self, action: #selector(didTapDeleteButton), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -51,6 +51,7 @@ class ToolBarView: UIView {
     weak var delegate: ToolBarViewDelegate?
     
     private var isTitleHidden: Bool = false
+    private var items = [IndexPath]()
     
     //MARK: - INIT
     
@@ -86,28 +87,36 @@ class ToolBarView: UIView {
         stackView.distribution = .fillProportionally
         stackView.pinEdgesToSuperView()
         
-        stackView.addArrangedSubview(btnOption)
+        stackView.addArrangedSubview(btnShare)
         stackView.addArrangedSubview(lblTitle)
-        stackView.addArrangedSubview(btnRemove)
+        stackView.addArrangedSubview(btnDelete)
         
         NSLayoutConstraint.activate([
-            btnOption.widthAnchor.constraint(equalToConstant: 50),
-            btnRemove.widthAnchor.constraint(equalToConstant: 50)
+            btnShare.widthAnchor.constraint(equalToConstant: 50),
+            btnDelete.widthAnchor.constraint(equalToConstant: 50)
         ])
         
         lblTitle.isHidden = isTitleHidden
     }
     
-    @objc private func didTapOptionButton() {
-        delegate?.didTapOptionButton()
+    @objc private func didTapShareButton() {
+        if let vc = parentViewController {
+            delegate?.didTapShare(vc, items: items)
+        }
     }
     
-    @objc func didTapRemoveButton() {
-        delegate?.didTapRemoveButton()
+    @objc func didTapDeleteButton() {
+        if let vc = parentViewController {
+            delegate?.didTapDelete(vc, items: items)
+        }
     }
     
     func setTitle(_ title: String) {
         lblTitle.text = title
+    }
+    
+    func setItems(_ items: [IndexPath]) {
+        self.items = items
     }
     
     func toggleShowTitle(_ hide: Bool) {

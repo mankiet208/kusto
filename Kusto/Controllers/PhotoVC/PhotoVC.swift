@@ -71,6 +71,7 @@ class PhotoVC: BaseVC {
                     }
                 }
                 selectedIndex.removeAll()
+                vwToolBar.setItems([])
             }
         }
     }
@@ -79,12 +80,11 @@ class PhotoVC: BaseVC {
     var photos = [Photo]()
     var selectedPhotos = [Photo]()
     
-    var viewablePhotos = [ViewablePhoto]()
-    
     var selectedIndex = [IndexPath]() {
         didSet {
             let barTitle = "\(selectedIndex.count) Photo Selected"
             vwToolBar.setTitle(barTitle)
+            vwToolBar.setItems(selectedIndex)
         }
     }
     
@@ -93,11 +93,7 @@ class PhotoVC: BaseVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = album.name
-        
-        view.addSubview(btnAdd)
-        view.addSubview(vwToolBar)
-        
+        setupView()
         setupCollectionView()
         setupData()
     }
@@ -121,24 +117,12 @@ class PhotoVC: BaseVC {
 
 //MARK: - PRIVATE METHOD
 extension PhotoVC {
-    private func setupData() {
-        guard let album = album else {
-            return
-        }
-        SpinnerVC.showSpinner(on: self)
-        DispatchQueue.background {
-            if let index = UserDefaultsStore.listAlbum.firstIndex(where: {$0.id == album.id}) {
-                self.photos = UserDefaultsStore.listAlbum[index].photos
-                
-                self.viewablePhotos = self.photos.map {
-                    ViewablePhoto(type: .image, assetID: nil, url: nil, placeholder: $0.toUIImage()!)
-                }
-            }
-        } completion: {
-            SpinnerVC.hideSpinner()
-            self.clvPhoto.reloadData()
-            self.showAddButton()
-        }
+    
+    private func setupView() {
+        title = album.name
+        view.addSubview(btnAdd)
+        view.addSubview(vwToolBar)
+        vwToolBar.delegate = self
     }
     
     private func setupCollectionView() {
@@ -162,6 +146,22 @@ extension PhotoVC {
         ) {
             self.btnAdd.isHidden = false
             self.btnAdd.frame.origin.y = UIScreen.main.bounds.size.height - self.viewBottomConstraint
+        }
+    }
+    
+    private func setupData() {
+        guard let album = album else {
+            return
+        }
+        SpinnerVC.show(on: self)
+        DispatchQueue.background {
+            if let index = UserDefaultsStore.listAlbum.firstIndex(where: {$0.id == album.id}) {
+                self.photos = UserDefaultsStore.listAlbum[index].photos
+            }
+        } completion: {
+            SpinnerVC.hide()
+            self.clvPhoto.reloadData()
+            self.showAddButton()
         }
     }
     
@@ -209,66 +209,55 @@ extension PhotoVC {
 
 //MARK: - ACTIONS
 extension PhotoVC {
+    
     @objc private func didTapAddButton() {
-        showImagePicker()
+        PermissionHelper.shared.checkPhotos { [weak self] granted in
+            guard let self = self else { return }
+            if granted {
+                self.showImagePicker()
+            } else {
+                AlertView.showAlert(
+                    self,
+                    title: "Need Photos permission",
+                    message: "Please turn on Photos permission in app settings",
+                    actions: [
+                        UIAlertAction(title: "Cancel", style: .default, handler: nil),
+                        UIAlertAction(title: "Settings", style: .default, handler: { _ in
+                            PermissionHelper.shared.openSettings()
+                        })
+                    ]
+                )
+            }
+        }
     }
     
-    @objc func didTapOptionButton() {
+    private func deletePhotos(_ items: [IndexPath]) {
         guard let album = album else {
             return
         }
-        for indexPath in selectedIndex {
-            let photo = photos[indexPath.row]
-
-            // Remove photo from array
-            if let index = selectedIndex.firstIndex(of: indexPath) {
-                selectedIndex.remove(at: index)
+        SpinnerVC.show(on: self)
+        DispatchQueue.background {
+            for indexPath in items {
+                let photo = self.photos[indexPath.row]
+                
+                // Remove photo from document directory
+                UIImage.clearPhotoCache(photoId: photo.name)
+                
+                // Update local data
+                if let index = self.photos.firstIndex(where: {$0.name == photo.name}) {
+                    self.photos.remove(at: index)
+                }
             }
-            
-            // Remove photo from document directory
-            UIImage.clearPhotoCache(photoId: photo.name)
-            
-            // Update local data
-            if let index = photos.firstIndex(where: {$0.name == photo.name}) {
-                photos.remove(at: index)
+            // Update UserDefaults
+            if let index = UserDefaultsStore.listAlbum.firstIndex(where: {$0.id == album.id}) {
+                UserDefaultsStore.listAlbum[index].photos = self.photos
             }
+        } completion: {
+            SpinnerVC.hide()
+            self.isEditingMode = false
+            self.selectedIndex.removeAll()
+            self.clvPhoto.reloadData()
         }
-        // Update UserDefaults
-        if let index = UserDefaultsStore.listAlbum.firstIndex(where: {$0.id == album.id}) {
-            UserDefaultsStore.listAlbum[index].photos = photos
-        }
-        
-        // Update UI
-        clvPhoto.reloadData()
-    }
-    
-    @objc internal func didTapRemoveButton() {
-        guard let album = album else {
-            return
-        }
-        for indexPath in selectedIndex {
-            let photo = photos[indexPath.row]
-
-            // Remove photo from array
-            if let index = selectedIndex.firstIndex(of: indexPath) {
-                selectedIndex.remove(at: index)
-            }
-            
-            // Remove photo from document directory
-            UIImage.clearPhotoCache(photoId: photo.name)
-            
-            // Update local data
-            if let index = photos.firstIndex(where: {$0.name == photo.name}) {
-                photos.remove(at: index)
-            }
-        }
-        // Update UserDefaults
-        if let index = UserDefaultsStore.listAlbum.firstIndex(where: {$0.id == album.id}) {
-            UserDefaultsStore.listAlbum[index].photos = photos
-        }
-        
-        // Update UI
-        clvPhoto.reloadData()
     }
 }
 
@@ -304,7 +293,6 @@ extension PhotoVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView,
                         didSelectItemAt indexPath: IndexPath) {
         if isEditingMode {
-            // Select item
             guard let cell = collectionView.cellForItem(at: indexPath) as? PhotoCell else {
                 return
             }
@@ -320,18 +308,17 @@ extension PhotoVC: UICollectionViewDelegate {
                 cell.toggleSelected(true)
             }
         } else {
-//            guard let photoDetailVC = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "PhotoDetailVC") as? PhotoDetailVC else {
-//                return
-//            }
-//            photoDetailVC.selectedImageName = photos[indexPath.row].name
-//            self.push(photoDetailVC)
-            
+            // Show photo viewer
             let toolBar = ToolBarView()
-            toolBar.toggleShowTitle(true)
-            
+            toolBar.delegate = self
+            toolBar.setItems([indexPath])
+            toolBar.toggleShowTitle(false)
+            toolBar.setTitle(photos[indexPath.row].imageSize)
+
             let viewerController = ViewerController(initialIndexPath: indexPath, collectionView: collectionView)
             viewerController.dataSource = self
             viewerController.footerView = toolBar
+            viewerController.modalTransitionStyle = .crossDissolve
 
             present(viewerController, animated: false, completion: nil)
         }
@@ -368,18 +355,43 @@ extension PhotoVC: UICollectionViewDelegateFlowLayout {
     }
 }
 
+//MARK: - ToolBarViewDelegate
 extension PhotoVC: ToolBarViewDelegate {
     
-}
-
-extension PhotoVC: ViewerControllerDataSource {
-    func numberOfItemsInViewerController(_ viewerController: Viewer.ViewerController) -> Int {
-        return viewablePhotos.count
+    func didTapShare(_ controller: UIViewController, items: [IndexPath]) {
+        let shareItems = items.map { photos[$0.row].image }
+        let vc = UIActivityViewController(
+            activityItems: shareItems as [Any],
+            applicationActivities: nil
+        )
+        controller.present(vc, animated: true)
     }
     
-    func viewerController(_ viewerController: ViewerController, viewableAt indexPath: IndexPath) -> Viewable {
-        return viewablePhotos[indexPath.row]
+    func didTapDelete(_ controller: UIViewController, items: [IndexPath]) {
+        let alertTitle = selectedIndex.count > 1 ? "photos" : "photo"
+        AlertView.showAlert(
+            controller,
+            title: "Delete \(alertTitle)",
+            message: "Are you sure you want to delete?",
+            actions: [
+                UIAlertAction(title: "Cancel", style: .cancel),
+                UIAlertAction(title: "Delete", style: .destructive, handler: { [weak self] _ in
+                    self?.deletePhotos(items)
+                    controller.dismiss(animated: true)
+                })
+            ]
+        )
     }
 }
 
+//MARK: - ViewerControllerDataSource
+extension PhotoVC: ViewerControllerDataSource {
 
+    func numberOfItemsInViewerController(_ viewerController: Viewer.ViewerController) -> Int {
+        return photos.count
+    }
+
+    func viewerController(_ viewerController: ViewerController, viewableAt indexPath: IndexPath) -> Viewable {
+        return photos[indexPath.row].viewable
+    }
+}

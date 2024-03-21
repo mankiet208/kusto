@@ -144,9 +144,11 @@ extension AuthVC: KeyboardViewDelegate {
     
     func didTapBiometric() {
         if myPIN == nil {
-            let alert = UIAlertController(title: "Please setup your PIN", message: nil, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            present(alert, animated: true)
+            AlertView.showAlert(self, title: "Please setup your PIN", message: nil, actions: [])
+            
+//            let alert = UIAlertController(title: "Please setup your PIN", message: nil, preferredStyle: .alert)
+//            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+//            present(alert, animated: true)
         } else {
             showBiometric()
         }
@@ -157,14 +159,23 @@ extension AuthVC: PinCodeViewDelegate {
     
     func onSubmitPin(_ pin: String) {
         if myPIN == nil {
-            let alert = UIAlertController(title: "Confirm PIN code", message: nil, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Reset", style: .default, handler: { _ in
-                self.pinView.clearPin()
-            }))
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] _ in
-                self?.confirmPIN(pin)
-            }))
-            present(alert, animated: true)
+            AlertView.showAlert(self, title: "Confirm PIN code", message: nil, actions: [
+                UIAlertAction(title: "Reset", style: .default, handler: { _ in
+                    self.pinView.clearPin()
+                }),
+                UIAlertAction(title: "OK", style: .default, handler: { [weak self] _ in
+                    self?.confirmPIN(pin)
+                })
+            ])
+
+//            let alert = UIAlertController(title: "Confirm PIN code", message: nil, preferredStyle: .alert)
+//            alert.addAction(UIAlertAction(title: "Reset", style: .default, handler: { _ in
+//                self.pinView.clearPin()
+//            }))
+//            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] _ in
+//                self?.confirmPIN(pin)
+//            }))
+//            present(alert, animated: true)
         } else {
             confirmPIN(pin)
         }

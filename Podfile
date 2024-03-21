@@ -7,7 +7,7 @@ target 'Kusto' do
 
   # Pods for Kusto
   pod "BSImagePicker", "~> 3.1"
-  pod "Viewer"
+  pod 'Viewer'
   pod 'Google-Mobile-Ads-SDK'
   
 end

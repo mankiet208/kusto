@@ -13,6 +13,6 @@ struct PhotoCellViewModel {
     
     init(from model: Photo) {
         self.name = model.name
-        self.image = model.loadThumbnail()
+        self.image = model.thumbnail
     }
 }

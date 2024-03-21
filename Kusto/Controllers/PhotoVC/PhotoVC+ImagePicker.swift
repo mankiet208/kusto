@@ -72,6 +72,7 @@ extension PhotoVC {
             
             // Update album model in UserDefaults
             let photo = Photo(
+                id: UUID().uuidString,
                 albumId: album.id,
                 name: imageName
             )
