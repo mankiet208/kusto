@@ -408,17 +408,11 @@ extension PhotoVC: ViewerControllerDelegate {
         }
     }
     
-    func viewerControllerDidDismiss(_ viewerController: Viewer.ViewerController) {
-        
-    }
+    func viewerControllerDidDismiss(_ viewerController: Viewer.ViewerController) {}
     
-    func viewerController(_ viewerController: Viewer.ViewerController, didFailDisplayingViewableAt indexPath: IndexPath, error: NSError) {
-        
-    }
+    func viewerController(_ viewerController: Viewer.ViewerController, didFailDisplayingViewableAt indexPath: IndexPath, error: NSError) {}
     
-    func viewerController(_ viewerController: Viewer.ViewerController, didLongPressViewableAt indexPath: IndexPath) {
-        
-    }
+    func viewerController(_ viewerController: Viewer.ViewerController, didLongPressViewableAt indexPath: IndexPath) {}
 }
 
 //MARK: - ToolBarViewDelegate
@@ -469,7 +463,9 @@ extension PhotoVC: PhotoViewerHeaderViewDelegate {
         
         let editingStack = EditingStack(imageProvider: imageProvider)
         
-        let editController = ClassicImageEditViewController(editingStack: editingStack)
+        let options = ClassicImageEditOptions.default
+        
+        let editController = ClassicImageEditViewController(editingStack: editingStack, options: options)
         
         let navigationController = UINavigationController(rootViewController: editController)
         navigationController.modalPresentationStyle = .fullScreen
@@ -478,19 +474,27 @@ extension PhotoVC: PhotoViewerHeaderViewDelegate {
         editController.handlers.didCancelEditing = { vc in
             navigationController.dismiss(animated: true)
         }
-        editController.handlers.didEndEditing = { [weak self] (vc, editingStack) in
-            guard let renderer: BrightRoomImageRenderer = try? editingStack.makeRenderer(),
-                  let rendered: BrightRoomImageRenderer.Rendered = try? renderer.render() else {
-                return
+        editController.handlers.didEndEditing = { [weak self] vc, editStack in
+            guard let self = self else { return }
+            var image: UIImage?
+            
+            do {
+                let rendered = try editStack.makeRenderer().render()
+                let imgData = rendered.makeOptimizedForSharingData(dataType: .png)
+                image = UIImage(data: imgData)
+            } catch {
+                print("error?", error)
             }
-           
-            let image = rendered.uiImage
-            self?.photos[indexPath.row].saveImage(image: image)
-            self?.photos[indexPath.row].saveThumbnail(with: image)
-            self?.clvPhoto.reloadData()
-            navigationController.dismiss(animated: true)
+            
+            if let image = image {
+                self.photos[indexPath.row].saveImage(image: image)
+                self.photos[indexPath.row].saveThumbnail(with: image)
+                self.clvPhoto.reloadData()
+                navigationController.dismiss(animated: true)
+            }
         }
         
+        // Show edit screen
         viewerController.dismiss { [weak self] in
             self?.present(navigationController, animated: true, completion: nil)
         }

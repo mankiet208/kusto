@@ -45,7 +45,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if let authVC = storyboard.instantiateViewController(withIdentifier: "AuthVC") as? AuthVC {
             authVC.modalPresentationStyle = .fullScreen
-            window?.rootViewController!.present(authVC, animated: true, completion: nil)
+            window?.rootViewController!.present(authVC, animated: false, completion: nil)
         }
     }
     
