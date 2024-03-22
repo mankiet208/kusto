@@ -23,16 +23,19 @@ extension PhotoVC {
             // User finished selection assets.
             let images = self.getImageFromAsset(assets: assets)
             
+            SpinnerVC.show(on: self)
+            
             DispatchQueue.background {
                 self.updateImageStorage(images: images)
             } completion: {
-                // Remove import photo in library
-
+                SpinnerVC.hide()
+                
                 // Update UI
                 self.clvPhoto.reloadData()
                 
-                // Prompt user to remove photo in trash
-                AlertView.showAlert(self, title: "Import Completed", message: "")
+                // TODO: Remove import photo in library
+                
+                // TODO: Prompt user to remove photo in trash
             }
         })
     }
@@ -58,12 +61,13 @@ extension PhotoVC {
     }
     
     func updateImageStorage(images: [UIImage]) {
-        guard let album = album else {
+        guard let album = album,
+              let albumIndex = album.getIndex() else {
             return
         }
         for image in images {
-            let imageName = UUID().uuidString
-            let imagePath = UIImage.getDocumentsDirectory().appendingPathComponent(imageName)
+            let imageId = UUID().uuidString
+            let imagePath = UIImage.getDocumentsDirectory().appendingPathComponent(imageId)
                     
             // Write photo to documents directory
             if let jpegData = image.jpegData(compressionQuality: 1) {
@@ -72,15 +76,13 @@ extension PhotoVC {
             
             // Update album model in UserDefaults
             let photo = Photo(
-                id: UUID().uuidString,
-                albumId: album.id,
-                name: imageName
+                id: imageId,
+                albumId: album.id
             )
             photo.saveThumbnail(with: image)
             photos.append(photo)
-        }
-        if let index = UserDefaultsStore.listAlbum.firstIndex(where: {$0.id == album.id}) {
-            UserDefaultsStore.listAlbum[index].photos = photos
+            UserDefaultsStore.listAlbum[albumIndex].photos.append(photo)
+            delegate?.didUpdatePhotos(in: album)
         }
     }
 }

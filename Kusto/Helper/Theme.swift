@@ -31,9 +31,9 @@ enum Theme: Int {
     var onBackground: UIColor {
         switch self {
         case .light:
-            return UIColor.gray900
+            return UIColor.primary
         case .dark:
-            return UIColor.white
+            return UIColor.primary
         }
     }
     

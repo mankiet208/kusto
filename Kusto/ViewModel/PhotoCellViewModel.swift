@@ -8,11 +8,11 @@
 import UIKit
 
 struct PhotoCellViewModel {
-    let name: String
+    let id: String
     let image: UIImage?
     
     init(from model: Photo) {
-        self.name = model.name
+        self.id = model.id
         self.image = model.thumbnail
     }
 }

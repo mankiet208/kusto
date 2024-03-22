@@ -11,15 +11,29 @@ import Viewer
 struct Photo: Codable {
     let id: String
     let albumId: String
-    let name: String
+    
+    // PRIVATE
+    
+    private var thumbnailID: String {
+        return "thumbnail_\(id)"
+    }
+    
+    private var photoID: String {
+        return "photo_\(id)"
+    }
+    
+    private var imagePath: URL {
+        return UIImage.getDocumentsDirectory().appendingPathComponent(id)
+    }
+    
+    // PUBLIC
     
     var image: UIImage? {
-        let imagePath = UIImage.getDocumentsDirectory().appendingPathComponent(self.name).path
-        return UIImage(contentsOfFile: imagePath)
+        return UIImage(contentsOfFile: imagePath.path)
     }
     
     var thumbnail: UIImage? {
-        guard let imageData = UserDefaults.standard.object(forKey: name) as? Data,
+        guard let imageData = UserDefaults.standard.object(forKey: thumbnailID) as? Data,
               let image = UIImage(data: imageData) else  {
             return nil
         }
@@ -37,16 +51,23 @@ struct Photo: Codable {
         return string
     }
     
-    func saveThumbnail(with image: UIImage) {
-        if let resizedImage = image.resizeImage(newWidth: 200) {
-            UserDefaults.standard.set(resizedImage.pngData(), forKey: name)
-        }
-    }
     
     func save() {
         let encoder = JSONEncoder()
         if let encoded = try? encoder.encode(self) {
-            UserDefaults.standard.set(encoded, forKey: name)
+            UserDefaults.standard.set(encoded, forKey: photoID)
+        }
+    }
+    
+    func saveThumbnail(with image: UIImage) {
+        if let resizedImage = image.resizeImage(newWidth: 200) {
+            UserDefaults.standard.set(resizedImage.pngData(), forKey: thumbnailID)
+        }
+    }
+    
+    func saveImage(image: UIImage, compression: CGFloat = 1) {
+        if let jpegData = image.jpegData(compressionQuality: 1) {
+            try? jpegData.write(to: imagePath)
         }
     }
 }

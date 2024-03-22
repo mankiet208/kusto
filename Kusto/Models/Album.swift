@@ -17,4 +17,8 @@ struct Album: Codable {
         self.name = name
         self.photos = photos
     }
+    
+    func getIndex() -> Int? {
+         return UserDefaultsStore.listAlbum.firstIndex(where: {$0.id == id})
+    }
 }

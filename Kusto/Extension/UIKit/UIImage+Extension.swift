@@ -8,6 +8,7 @@
 import UIKit
 
 extension UIImage {
+    
     static func getDocumentsDirectory() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return paths[0]
@@ -41,11 +42,6 @@ extension UIImage {
         }
       }
     
-    func toString() -> String? {
-        let data: Data? = self.pngData()
-        return data?.base64EncodedString(options: .endLineWithLineFeed)
-    }
-    
     func resizeImage(newWidth: CGFloat) -> UIImage? {
         let scale = newWidth / self.size.width
         let newHeight = self.size.height * scale
@@ -54,6 +50,11 @@ extension UIImage {
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return newImage
+    }
+    
+    func toString() -> String? {
+        let data: Data? = self.pngData()
+        return data?.base64EncodedString(options: .endLineWithLineFeed)
     }
 }
 

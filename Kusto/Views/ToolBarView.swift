@@ -8,21 +8,21 @@
 import UIKit
 
 protocol ToolBarViewDelegate: AnyObject {
-    func didTapShare(_ vc: UIViewController, items: [IndexPath])
-    func didTapDelete(_ vc: UIViewController, items: [IndexPath])
+    func didTapShare(_ toolBarView: ToolBarView, controller: UIViewController, for items: [IndexPath])
+    func didTapDelete(_ toolBarView: ToolBarView, controller: UIViewController, for items: [IndexPath])
 }
 
 class ToolBarView: UIView {
     
     //MARK: - UI
-    
+        
     lazy private var btnShare: UIButton = {
         let button = UIButton(type: .custom)
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 23, weight: .regular, scale: .default)
         button.setImage(UIImage(systemName: "square.and.arrow.up", withConfiguration: imageConfig), for: .normal)
         button.imageView?.tintColor = .white
         button.imageView?.contentMode = .scaleAspectFit
-        button.addTarget(self, action: #selector(didTapShareButton), for: .touchUpInside)
+        button.addTarget(self, action: #selector(ToolBarView.shareAction(button:)), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -33,7 +33,7 @@ class ToolBarView: UIView {
         button.setImage(UIImage(systemName: "trash", withConfiguration: imageConfig), for: .normal)
         button.imageView?.tintColor = .white
         button.imageView?.contentMode = .scaleAspectFit
-        button.addTarget(self, action: #selector(didTapDeleteButton), for: .touchUpInside)
+        button.addTarget(self, action: #selector(ToolBarView.deleteAction(button:)), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -42,7 +42,7 @@ class ToolBarView: UIView {
         let label = UILabel()
         label.textAlignment = .center
         label.textColor = .white
-        label.text = "0 Photo Selected"
+        label.text = " "
         return label
     }()
     
@@ -99,15 +99,15 @@ class ToolBarView: UIView {
         lblTitle.isHidden = isTitleHidden
     }
     
-    @objc private func didTapShareButton() {
-        if let vc = parentViewController {
-            delegate?.didTapShare(vc, items: items)
+    @objc private func shareAction(button: UIButton) {
+        if let controller = parentViewController {
+            delegate?.didTapShare(self, controller: controller, for: items)
         }
     }
     
-    @objc func didTapDeleteButton() {
-        if let vc = parentViewController {
-            delegate?.didTapDelete(vc, items: items)
+    @objc func deleteAction(button: UIButton) {
+        if let controller = parentViewController {
+            delegate?.didTapDelete(self, controller: controller, for: items)
         }
     }
     

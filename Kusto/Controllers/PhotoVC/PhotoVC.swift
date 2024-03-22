@@ -9,6 +9,12 @@ import UIKit
 import BSImagePicker
 import Photos
 import Viewer
+import BrightroomUI
+import BrightroomEngine
+
+protocol PhotoVCDelegate: AnyObject {
+    func didUpdatePhotos(in album: Album)
+}
 
 class PhotoVC: BaseVC {
     
@@ -21,6 +27,21 @@ class PhotoVC: BaseVC {
     private let viewBottomConstraint: CGFloat = 80
     
     //MARK: - UI
+    
+    lazy private var vwToolBar: ToolBarView = {
+        let toolBar = ToolBarView()
+        toolBar.delegate = self
+        toolBar.setTitle("0 Photo Selected")
+        return toolBar
+    }()
+    
+    private lazy var photoViewerHeaderView: PhotoViewerHeaderView = {
+        let headerView = PhotoViewerHeaderView()
+        headerView.delegate = self
+        headerView.alpha = 0
+        headerView.translatesAutoresizingMaskIntoConstraints = false
+        return headerView
+    }()
     
     lazy private var btnAdd: UIButton = {
         let buttonWidth: CGFloat = 100
@@ -43,9 +64,22 @@ class PhotoVC: BaseVC {
         return button
     }()
     
-    lazy private var vwToolBar = ToolBarView()
     
     //MARK: - PROPS
+    
+    weak var delegate: PhotoVCDelegate?
+    
+    var album: Album!
+    var photos = [Photo]()
+    var selectedPhotos = [Photo]()
+    
+    var selectedIndex = [IndexPath]() {
+        didSet {
+            let barTitle = "\(selectedIndex.count) Photo Selected"
+            vwToolBar.setTitle(barTitle)
+            vwToolBar.setItems(selectedIndex)
+        }
+    }
     
     var isEditingMode: Bool = false {
         didSet {
@@ -73,18 +107,6 @@ class PhotoVC: BaseVC {
                 selectedIndex.removeAll()
                 vwToolBar.setItems([])
             }
-        }
-    }
-    
-    var album: Album!
-    var photos = [Photo]()
-    var selectedPhotos = [Photo]()
-    
-    var selectedIndex = [IndexPath]() {
-        didSet {
-            let barTitle = "\(selectedIndex.count) Photo Selected"
-            vwToolBar.setTitle(barTitle)
-            vwToolBar.setItems(selectedIndex)
         }
     }
     
@@ -122,7 +144,6 @@ extension PhotoVC {
         title = album.name
         view.addSubview(btnAdd)
         view.addSubview(vwToolBar)
-        vwToolBar.delegate = self
     }
     
     private func setupCollectionView() {
@@ -156,7 +177,7 @@ extension PhotoVC {
         }
         SpinnerVC.show(on: self)
         DispatchQueue.background {
-            if let index = UserDefaultsStore.listAlbum.firstIndex(where: {$0.id == album.id}) {
+            if let index = album.getIndex() {
                 self.photos = UserDefaultsStore.listAlbum[index].photos
             }
         } completion: {
@@ -233,31 +254,35 @@ extension PhotoVC {
     }
     
     private func deletePhotos(_ items: [IndexPath]) {
-        guard let album = album else {
+        guard let album = album,
+              let albumIndex = album.getIndex() else {
             return
         }
+       
+        
         SpinnerVC.show(on: self)
         DispatchQueue.background {
             for indexPath in items {
                 let photo = self.photos[indexPath.row]
                 
                 // Remove photo from document directory
-                UIImage.clearPhotoCache(photoId: photo.name)
+                UIImage.clearPhotoCache(photoId: photo.id)
                 
-                // Update local data
-                if let index = self.photos.firstIndex(where: {$0.name == photo.name}) {
+                if let index = self.photos.firstIndex(where: {$0.id == photo.id}) {
+                    // Update local data
                     self.photos.remove(at: index)
+                    
+                    // Update UserDefaults
+                    UserDefaultsStore.listAlbum[albumIndex].photos.remove(at: index)
                 }
-            }
-            // Update UserDefaults
-            if let index = UserDefaultsStore.listAlbum.firstIndex(where: {$0.id == album.id}) {
-                UserDefaultsStore.listAlbum[index].photos = self.photos
             }
         } completion: {
             SpinnerVC.hide()
             self.isEditingMode = false
             self.selectedIndex.removeAll()
             self.clvPhoto.reloadData()
+            self.delegate?.didUpdatePhotos(in: album)
+
         }
     }
 }
@@ -285,44 +310,6 @@ extension PhotoVC: UICollectionViewDataSource {
         cell.toggleSelected(isCellSelected)
         
         return cell
-    }
-}
-
-//MARK: - UICollectionViewDelegate
-extension PhotoVC: UICollectionViewDelegate {
-    
-    func collectionView(_ collectionView: UICollectionView,
-                        didSelectItemAt indexPath: IndexPath) {
-        if isEditingMode {
-            guard let cell = collectionView.cellForItem(at: indexPath) as? PhotoCell else {
-                return
-            }
-            if selectedIndex.contains(indexPath) {
-                // Unselect
-                if let index = selectedIndex.firstIndex(where: { $0 == indexPath }) {
-                    selectedIndex.remove(at: index)
-                }
-                cell.toggleSelected(false)
-            } else {
-                // Select
-                selectedIndex.append(indexPath)
-                cell.toggleSelected(true)
-            }
-        } else {
-            // Show photo viewer
-            let toolBar = ToolBarView()
-            toolBar.delegate = self
-            toolBar.setItems([indexPath])
-            toolBar.toggleShowTitle(false)
-            toolBar.setTitle(photos[indexPath.row].imageSize)
-
-            let viewerController = ViewerController(initialIndexPath: indexPath, collectionView: collectionView)
-            viewerController.dataSource = self
-            viewerController.footerView = toolBar
-            viewerController.modalTransitionStyle = .crossDissolve
-
-            present(viewerController, animated: false, completion: nil)
-        }
     }
 }
 
@@ -356,19 +343,97 @@ extension PhotoVC: UICollectionViewDelegateFlowLayout {
     }
 }
 
+//MARK: - UICollectionViewDelegate
+extension PhotoVC: UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        didSelectItemAt indexPath: IndexPath) {
+        if isEditingMode {
+            guard let cell = collectionView.cellForItem(at: indexPath) as? PhotoCell else {
+                return
+            }
+            if selectedIndex.contains(indexPath) {
+                // Unselect
+                if let index = selectedIndex.firstIndex(where: { $0 == indexPath }) {
+                    selectedIndex.remove(at: index)
+                }
+                cell.toggleSelected(false)
+            } else {
+                // Select
+                selectedIndex.append(indexPath)
+                cell.toggleSelected(true)
+            }
+        } else {
+            // Show photo viewer
+            
+            let toolBar = ToolBarView()
+            toolBar.delegate = self
+            
+            let headerView = PhotoViewerHeaderView()
+            headerView.delegate = self
+            
+            let viewerController = ViewerController(initialIndexPath: indexPath, collectionView: collectionView)
+            viewerController.modalTransitionStyle = .crossDissolve
+            viewerController.dataSource = self
+            viewerController.delegate = self
+            viewerController.footerView = toolBar
+            viewerController.headerView = headerView
+            viewerController.viewableBackgroundColor = theme.background
+            present(viewerController, animated: false, completion: nil)
+        }
+    }
+}
+
+//MARK: - ViewerControllerDataSource
+extension PhotoVC: ViewerControllerDataSource {
+
+    func numberOfItemsInViewerController(_ viewerController: Viewer.ViewerController) -> Int {
+        return photos.count
+    }
+
+    func viewerController(_ viewerController: ViewerController, viewableAt indexPath: IndexPath) -> Viewable {
+        return photos[indexPath.row].viewable
+    }
+}
+
+//MARK: - ViewerControllerDelegate
+extension PhotoVC: ViewerControllerDelegate {
+    
+    func viewerController(_ viewerController: Viewer.ViewerController, didChangeFocusTo indexPath: IndexPath) {
+        if let header = viewerController.headerView as? PhotoViewerHeaderView {
+            header.setSelectedItem(indexPath)
+        }
+        if let toolBar = viewerController.footerView as? ToolBarView {
+            toolBar.setItems([indexPath])
+        }
+    }
+    
+    func viewerControllerDidDismiss(_ viewerController: Viewer.ViewerController) {
+        
+    }
+    
+    func viewerController(_ viewerController: Viewer.ViewerController, didFailDisplayingViewableAt indexPath: IndexPath, error: NSError) {
+        
+    }
+    
+    func viewerController(_ viewerController: Viewer.ViewerController, didLongPressViewableAt indexPath: IndexPath) {
+        
+    }
+}
+
 //MARK: - ToolBarViewDelegate
 extension PhotoVC: ToolBarViewDelegate {
     
-    func didTapShare(_ controller: UIViewController, items: [IndexPath]) {
+    func didTapShare(_ toolBarView: ToolBarView, controller: UIViewController, for items: [IndexPath]) {
         let shareItems = items.map { photos[$0.row].image }
-        let vc = UIActivityViewController(
+        let shareController = UIActivityViewController(
             activityItems: shareItems as [Any],
             applicationActivities: nil
         )
-        controller.present(vc, animated: true)
+        controller.present(shareController, animated: true)
     }
     
-    func didTapDelete(_ controller: UIViewController, items: [IndexPath]) {
+    func didTapDelete(_ toolBarView: ToolBarView, controller: UIViewController, for items: [IndexPath]) {
         let alertTitle = selectedIndex.count > 1 ? "photos" : "photo"
         AlertView.showAlert(
             controller,
@@ -385,14 +450,50 @@ extension PhotoVC: ToolBarViewDelegate {
     }
 }
 
-//MARK: - ViewerControllerDataSource
-extension PhotoVC: ViewerControllerDataSource {
-
-    func numberOfItemsInViewerController(_ viewerController: Viewer.ViewerController) -> Int {
-        return photos.count
+//MARK: - PhotoViewerHeaderViewDelegate
+extension PhotoVC: PhotoViewerHeaderViewDelegate {
+    
+    func didTapClose(_ controller: UIViewController) {
+        guard let vc = controller as? ViewerController else {
+            return
+        }
+        vc.dismiss(nil)
     }
+    
+    func didTapEdit(_ controller: UIViewController, for indexPath: IndexPath) {
+        guard let viewerController = controller as? ViewerController,
+              let image = photos[indexPath.row].image else {
+            return
+        }
+        let imageProvider = ImageProvider(image: image)
+        
+        let editingStack = EditingStack(imageProvider: imageProvider)
+        
+        let editController = ClassicImageEditViewController(editingStack: editingStack)
+        
+        let navigationController = UINavigationController(rootViewController: editController)
+        navigationController.modalPresentationStyle = .fullScreen
 
-    func viewerController(_ viewerController: ViewerController, viewableAt indexPath: IndexPath) -> Viewable {
-        return photos[indexPath.row].viewable
+        // Handlers
+        editController.handlers.didCancelEditing = { vc in
+            navigationController.dismiss(animated: true)
+        }
+        editController.handlers.didEndEditing = { [weak self] (vc, editingStack) in
+            guard let renderer: BrightRoomImageRenderer = try? editingStack.makeRenderer(),
+                  let rendered: BrightRoomImageRenderer.Rendered = try? renderer.render() else {
+                return
+            }
+           
+            let image = rendered.uiImage
+            self?.photos[indexPath.row].saveImage(image: image)
+            self?.photos[indexPath.row].saveThumbnail(with: image)
+            self?.clvPhoto.reloadData()
+            navigationController.dismiss(animated: true)
+        }
+        
+        viewerController.dismiss { [weak self] in
+            self?.present(navigationController, animated: true, completion: nil)
+        }
     }
 }
+

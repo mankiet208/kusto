@@ -49,6 +49,9 @@
 		C39A8F792BAAEE030009524C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C39A8F782BAAEE020009524C /* GoogleService-Info.plist */; };
 		C39A8F7B2BABD9110009524C /* PermissionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39A8F7A2BABD9110009524C /* PermissionHelper.swift */; };
 		C39A8F7F2BAC3AA30009524C /* BiometricHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39A8F7E2BAC3AA30009524C /* BiometricHelper.swift */; };
+		C39A8F822BAD29070009524C /* BrightroomEngine in Frameworks */ = {isa = PBXBuildFile; productRef = C39A8F812BAD29070009524C /* BrightroomEngine */; };
+		C39A8F842BAD29070009524C /* BrightroomUI in Frameworks */ = {isa = PBXBuildFile; productRef = C39A8F832BAD29070009524C /* BrightroomUI */; };
+		C39A8F8A2BAD2C660009524C /* PhotoViewerHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39A8F892BAD2C660009524C /* PhotoViewerHeaderView.swift */; };
 		C3B7982E2BA8418200D98EAF /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B7982D2BA8418200D98EAF /* Theme.swift */; };
 		C3B798302BA8497700D98EAF /* ToolBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B7982F2BA8497700D98EAF /* ToolBarView.swift */; };
 		C3B7983C2BA945B300D98EAF /* AuthVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B7983B2BA945B300D98EAF /* AuthVC.swift */; };
@@ -103,6 +106,7 @@
 		C39A8F782BAAEE020009524C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C39A8F7A2BABD9110009524C /* PermissionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionHelper.swift; sourceTree = "<group>"; };
 		C39A8F7E2BAC3AA30009524C /* BiometricHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricHelper.swift; sourceTree = "<group>"; };
+		C39A8F892BAD2C660009524C /* PhotoViewerHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewerHeaderView.swift; sourceTree = "<group>"; };
 		C3B7982D2BA8418200D98EAF /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		C3B7982F2BA8497700D98EAF /* ToolBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolBarView.swift; sourceTree = "<group>"; };
 		C3B7983B2BA945B300D98EAF /* AuthVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthVC.swift; sourceTree = "<group>"; };
@@ -116,8 +120,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C39A8F822BAD29070009524C /* BrightroomEngine in Frameworks */,
 				C39A8F772BAAEDDE0009524C /* FirebaseAnalytics in Frameworks */,
 				261D56D3CE4CBE4D28B2106E /* Pods_Kusto.framework in Frameworks */,
+				C39A8F842BAD29070009524C /* BrightroomUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -173,11 +179,10 @@
 			isa = PBXGroup;
 			children = (
 				C3B7983F2BA9782A00D98EAF /* KeyboardView */,
-				0471042725F224050095DA74 /* AlbumCell */,
-				39D24DBE262831E60059A389 /* PhotoCell */,
 				C3B798422BA9A11300D98EAF /* PinCodeView.swift */,
 				C3B7982F2BA8497700D98EAF /* ToolBarView.swift */,
 				C35CFF1F2BAA904700E4965D /* UnderlineTextField.swift */,
+				C39A8F892BAD2C660009524C /* PhotoViewerHeaderView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -186,8 +191,9 @@
 			isa = PBXGroup;
 			children = (
 				39D24D95262830560059A389 /* Base */,
+				C39A8F852BAD29A40009524C /* EditVC */,
+				C39B60DA2BAD80B800E90D90 /* AlbumVC */,
 				39D24D97262830560059A389 /* PhotoVC */,
-				0471040425F1EC2B0095DA74 /* AlbumVC.swift */,
 				39DB154B262D68DE00006D45 /* PhotoDetailVC.swift */,
 				C3B7983B2BA945B300D98EAF /* AuthVC.swift */,
 			);
@@ -268,6 +274,7 @@
 		39D24D97262830560059A389 /* PhotoVC */ = {
 			isa = PBXGroup;
 			children = (
+				39D24DBE262831E60059A389 /* PhotoCell */,
 				39D24D99262830560059A389 /* PhotoVC.swift */,
 				39D24D98262830560059A389 /* PhotoVC+ImagePicker.swift */,
 			);
@@ -337,6 +344,22 @@
 			path = Biometric;
 			sourceTree = "<group>";
 		};
+		C39A8F852BAD29A40009524C /* EditVC */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = EditVC;
+			sourceTree = "<group>";
+		};
+		C39B60DA2BAD80B800E90D90 /* AlbumVC */ = {
+			isa = PBXGroup;
+			children = (
+				0471042725F224050095DA74 /* AlbumCell */,
+				0471040425F1EC2B0095DA74 /* AlbumVC.swift */,
+			);
+			path = AlbumVC;
+			sourceTree = "<group>";
+		};
 		C3B7983A2BA943F500D98EAF /* Config */ = {
 			isa = PBXGroup;
 			children = (
@@ -386,6 +409,8 @@
 			name = Kusto;
 			packageProductDependencies = (
 				C39A8F762BAAEDDE0009524C /* FirebaseAnalytics */,
+				C39A8F812BAD29070009524C /* BrightroomEngine */,
+				C39A8F832BAD29070009524C /* BrightroomUI */,
 			);
 			productName = PhotoLock;
 			productReference = 047103E525F1D3C50095DA74 /* Kusto.app */;
@@ -416,6 +441,7 @@
 			mainGroup = 047103DC25F1D3C50095DA74;
 			packageReferences = (
 				C39A8F752BAAEDDD0009524C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				C39A8F802BAD29070009524C /* XCRemoteSwiftPackageReference "Brightroom" */,
 			);
 			productRefGroup = 047103E625F1D3C50095DA74 /* Products */;
 			projectDirPath = "";
@@ -529,6 +555,7 @@
 				0471042325F224010095DA74 /* AlbumCell.swift in Sources */,
 				C39A8F7B2BABD9110009524C /* PermissionHelper.swift in Sources */,
 				047104A925F72D5E0095DA74 /* AlbumCellViewModel.swift in Sources */,
+				C39A8F8A2BAD2C660009524C /* PhotoViewerHeaderView.swift in Sources */,
 				39D24DA7262830890059A389 /* UIViewController+Extension.swift in Sources */,
 				39D24DB0262830CA0059A389 /* String+Extension.swift in Sources */,
 				39D24DA5262830890059A389 /* UIView+Extension.swift in Sources */,
@@ -769,6 +796,14 @@
 				kind = branch;
 			};
 		};
+		C39A8F802BAD29070009524C /* XCRemoteSwiftPackageReference "Brightroom" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/muukii/Brightroom.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -776,6 +811,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C39A8F752BAAEDDD0009524C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAnalytics;
+		};
+		C39A8F812BAD29070009524C /* BrightroomEngine */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C39A8F802BAD29070009524C /* XCRemoteSwiftPackageReference "Brightroom" */;
+			productName = BrightroomEngine;
+		};
+		C39A8F832BAD29070009524C /* BrightroomUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C39A8F802BAD29070009524C /* XCRemoteSwiftPackageReference "Brightroom" */;
+			productName = BrightroomUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

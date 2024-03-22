@@ -11,10 +11,10 @@ struct AlbumCellViewModel {
     let name: String?
     let avatarImage: UIImage?
     
-    init(from model: Album) {
-        self.name = model.name
+    init(from album: Album) {
+        self.name = album.name
         
-        if let image = model.photos.last?.image {
+        if let image = album.photos.last?.image {
             self.avatarImage = image
         } else {
             self.avatarImage = nil

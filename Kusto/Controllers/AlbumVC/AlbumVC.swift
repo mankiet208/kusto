@@ -108,6 +108,11 @@ class AlbumVC: BaseVC {
         alertVC.addAction(cancelAction)
         present(alertVC, animated: true)
     }
+    
+    private func refresh() {
+        albums = UserDefaultsStore.listAlbum
+        tbvAlbum.reloadData()
+    }
 }
 
 extension AlbumVC: UITableViewDataSource {
@@ -133,6 +138,7 @@ extension AlbumVC: UITableViewDelegate {
         guard let photoVC = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "PhotoVC") as? PhotoVC else {
             return
         }
+        photoVC.delegate = self
         photoVC.album = albums[indexPath.row]
         self.push(photoVC)
     }
@@ -163,5 +169,12 @@ extension AlbumVC: UITableViewDelegate {
         } else if editingStyle == .insert {
             
         }
+    }
+}
+
+extension AlbumVC: PhotoVCDelegate {
+    
+    func didUpdatePhotos(in album: Album) {
+        refresh()
     }
 }
