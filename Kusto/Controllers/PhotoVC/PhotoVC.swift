@@ -482,7 +482,7 @@ extension PhotoVC: PhotoViewerHeaderViewDelegate {
 //MARK: - ToolBarViewDelegate
 extension PhotoVC: ToolBarViewDelegate {
   
-    func didTapShare(_ toolBarView: ToolBarView, controller: UIViewController, for indexes: [IndexPath]) {
+    func didTapShare(_ toolBarView: ToolBarView, controller: UIViewController, for indexPaths: [IndexPath]) {
         let shareItems = photos.compactMap { $0.image }
         let shareController = UIActivityViewController(
             activityItems: shareItems as [Any],
@@ -491,7 +491,7 @@ extension PhotoVC: ToolBarViewDelegate {
         controller.present(shareController, animated: true)
     }
     
-    func didTapDelete(_ toolBarView: ToolBarView, controller: UIViewController, for indexes: [IndexPath]) {
+    func didTapDelete(_ toolBarView: ToolBarView, controller: UIViewController, for indexPaths: [IndexPath]) {
         let alertTitle = selectedIndex.count > 1 ? "photos" : "photo"
         AlertView.showAlert(
             controller,
@@ -500,15 +500,15 @@ extension PhotoVC: ToolBarViewDelegate {
             actions: [
                 UIAlertAction(title: "Cancel", style: .cancel),
                 UIAlertAction(title: "Delete", style: .destructive, handler: { [weak self] _ in
-                    self?.deletePhotos(indexes)
+                    self?.deletePhotos(indexPaths)
                     controller.dismiss(animated: true)
                 })
             ]
         )
     }
     
-    func didTapInfo(_ toolBarView: ToolBarView, controller: UIViewController, for index: IndexPath) {
-        guard let photo = photos[safe: index.row] else {
+    func didTapInfo(_ toolBarView: ToolBarView, controller: UIViewController, for indexPath: IndexPath) {
+        guard let photo = photos[safe: indexPath.row] else {
             return
         }
         let vc = PhotoInfoVC()

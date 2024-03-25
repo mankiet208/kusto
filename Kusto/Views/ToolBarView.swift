@@ -8,9 +8,9 @@
 import UIKit
 
 protocol ToolBarViewDelegate: AnyObject {
-    func didTapShare(_ toolBarView: ToolBarView, controller: UIViewController, for indexes: [IndexPath])
-    func didTapDelete(_ toolBarView: ToolBarView, controller: UIViewController, for indexes: [IndexPath])
-    func didTapInfo(_ toolBarView: ToolBarView, controller: UIViewController, for index: IndexPath)
+    func didTapShare(_ toolBarView: ToolBarView, controller: UIViewController, for indexPaths: [IndexPath])
+    func didTapDelete(_ toolBarView: ToolBarView, controller: UIViewController, for indexPaths: [IndexPath])
+    func didTapInfo(_ toolBarView: ToolBarView, controller: UIViewController, for indexPath: IndexPath)
 }
 
 class ToolBarView: UIView {
@@ -61,7 +61,7 @@ class ToolBarView: UIView {
     
     weak var delegate: ToolBarViewDelegate?
     
-    private var indexes = [IndexPath]()
+    private var indexPaths = [IndexPath]()
     
     var isViewerFooter: Bool = true {
         didSet {
@@ -117,20 +117,20 @@ class ToolBarView: UIView {
     
     @objc private func shareAction() {
         if let controller = parentViewController {
-            delegate?.didTapShare(self, controller: controller, for: indexes)
+            delegate?.didTapShare(self, controller: controller, for: indexPaths)
         }
     }
     
     @objc func deleteAction() {
         if let controller = parentViewController {
-            delegate?.didTapDelete(self, controller: controller, for: indexes)
+            delegate?.didTapDelete(self, controller: controller, for: indexPaths)
         }
     }
     
     @objc func infoAction() {
         if let controller = parentViewController,
-           let index = indexes.first {
-            delegate?.didTapInfo(self, controller: controller, for: index)
+           let indexPath = indexPaths.first {
+            delegate?.didTapInfo(self, controller: controller, for: indexPath)
         }
     }
     
@@ -138,8 +138,8 @@ class ToolBarView: UIView {
         lblTitle.text = title
     }
     
-    func setItems(_ indexes: [IndexPath]) {
-        self.indexes = indexes
+    func setItems(_ indexPaths: [IndexPath]) {
+        self.indexPaths = indexPaths
     }
     
     func toggleShowTitle(_ hide: Bool) {

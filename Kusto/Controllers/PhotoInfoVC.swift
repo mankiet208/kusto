@@ -56,6 +56,7 @@ class PhotoInfoVC: UIViewController {
         button.setImage(UIImage(systemName: "line.3.horizontal", withConfiguration: imageConfig), for: .normal)
         button.imageView?.tintColor = theme.onBackground
         button.imageView?.contentMode = .scaleAspectFit
+        button.isUserInteractionEnabled = false
         return button
     }()
     
@@ -94,7 +95,7 @@ class PhotoInfoVC: UIViewController {
     
     private func setupView() {
         view.backgroundColor = .clear
-        containerView.backgroundColor = theme.background
+        containerView.backgroundColor = isDarkMode ? UIColor.gray900 : theme.background
     }
     
     private func setupConstraints() {
