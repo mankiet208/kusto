@@ -31,6 +31,7 @@ class PhotoVC: BaseVC {
     lazy private var vwToolBar: ToolBarView = {
         let toolBar = ToolBarView()
         toolBar.delegate = self
+        toolBar.isViewerFooter = false
         toolBar.setTitle("0 Photo Selected")
         return toolBar
     }()
@@ -71,7 +72,6 @@ class PhotoVC: BaseVC {
     
     var album: Album!
     var photos = [Photo]()
-    var selectedPhotos = [Photo]()
     
     var selectedIndex = [IndexPath]() {
         didSet {
@@ -177,7 +177,7 @@ extension PhotoVC {
         }
         SpinnerVC.show(on: self)
         DispatchQueue.background {
-            if let index = album.getIndex() {
+            if let index = album.index {
                 self.photos = UserDefaultsStore.listAlbum[index].photos
             }
         } completion: {
@@ -253,36 +253,45 @@ extension PhotoVC {
         }
     }
     
-    private func deletePhotos(_ items: [IndexPath]) {
+    private func deletePhotos(_ indexPaths: [IndexPath]) {
         guard let album = album,
-              let albumIndex = album.getIndex() else {
+              let albumIndex = album.index else {
             return
         }
-       
+        var isLastPhotoDeleted: Bool = false
         
+        let indexes = indexPaths.map { $0.row }
+        let sortedIndexes = indexes.sorted { $0 > $1 }
+       
         SpinnerVC.show(on: self)
         DispatchQueue.background {
-            for indexPath in items {
-                let photo = self.photos[indexPath.row]
+            for index in sortedIndexes {
+                guard let photo = self.photos[safe: index] else {
+                    continue
+                }
+                // If deleted photo is the last in the album
+                if UserDefaultsStore.listAlbum[albumIndex].photos.last?.id == photo.id {
+                    isLastPhotoDeleted = true
+                }
                 
                 // Remove photo from document directory
-                UIImage.clearPhotoCache(photoId: photo.id)
+                UIImage.clearPhotoCache(with: photo.id)
                 
-                if let index = self.photos.firstIndex(where: {$0.id == photo.id}) {
-                    // Update local data
-                    self.photos.remove(at: index)
-                    
-                    // Update UserDefaults
-                    UserDefaultsStore.listAlbum[albumIndex].photos.remove(at: index)
-                }
+                // Update local data
+                self.photos.remove(at: index)
+                
+                // Update UserDefaults
+                UserDefaultsStore.listAlbum[albumIndex].photos.remove(at: index)
             }
         } completion: {
             SpinnerVC.hide()
             self.isEditingMode = false
             self.selectedIndex.removeAll()
             self.clvPhoto.reloadData()
-            self.delegate?.didUpdatePhotos(in: album)
-
+            
+            if isLastPhotoDeleted {
+                self.delegate?.didUpdatePhotos(in: album)
+            }
         }
     }
 }
@@ -346,8 +355,7 @@ extension PhotoVC: UICollectionViewDelegateFlowLayout {
 //MARK: - UICollectionViewDelegate
 extension PhotoVC: UICollectionViewDelegate {
     
-    func collectionView(_ collectionView: UICollectionView,
-                        didSelectItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if isEditingMode {
             guard let cell = collectionView.cellForItem(at: indexPath) as? PhotoCell else {
                 return
@@ -365,7 +373,6 @@ extension PhotoVC: UICollectionViewDelegate {
             }
         } else {
             // Show photo viewer
-            
             let toolBar = ToolBarView()
             toolBar.delegate = self
             
@@ -413,35 +420,6 @@ extension PhotoVC: ViewerControllerDelegate {
     func viewerController(_ viewerController: Viewer.ViewerController, didFailDisplayingViewableAt indexPath: IndexPath, error: NSError) {}
     
     func viewerController(_ viewerController: Viewer.ViewerController, didLongPressViewableAt indexPath: IndexPath) {}
-}
-
-//MARK: - ToolBarViewDelegate
-extension PhotoVC: ToolBarViewDelegate {
-    
-    func didTapShare(_ toolBarView: ToolBarView, controller: UIViewController, for items: [IndexPath]) {
-        let shareItems = items.map { photos[$0.row].image }
-        let shareController = UIActivityViewController(
-            activityItems: shareItems as [Any],
-            applicationActivities: nil
-        )
-        controller.present(shareController, animated: true)
-    }
-    
-    func didTapDelete(_ toolBarView: ToolBarView, controller: UIViewController, for items: [IndexPath]) {
-        let alertTitle = selectedIndex.count > 1 ? "photos" : "photo"
-        AlertView.showAlert(
-            controller,
-            title: "Delete \(alertTitle)",
-            message: "Are you sure you want to delete?",
-            actions: [
-                UIAlertAction(title: "Cancel", style: .cancel),
-                UIAlertAction(title: "Delete", style: .destructive, handler: { [weak self] _ in
-                    self?.deletePhotos(items)
-                    controller.dismiss(animated: true)
-                })
-            ]
-        )
-    }
 }
 
 //MARK: - PhotoViewerHeaderViewDelegate
@@ -501,3 +479,42 @@ extension PhotoVC: PhotoViewerHeaderViewDelegate {
     }
 }
 
+//MARK: - ToolBarViewDelegate
+extension PhotoVC: ToolBarViewDelegate {
+  
+    func didTapShare(_ toolBarView: ToolBarView, controller: UIViewController, for indexes: [IndexPath]) {
+        let shareItems = photos.compactMap { $0.image }
+        let shareController = UIActivityViewController(
+            activityItems: shareItems as [Any],
+            applicationActivities: nil
+        )
+        controller.present(shareController, animated: true)
+    }
+    
+    func didTapDelete(_ toolBarView: ToolBarView, controller: UIViewController, for indexes: [IndexPath]) {
+        let alertTitle = selectedIndex.count > 1 ? "photos" : "photo"
+        AlertView.showAlert(
+            controller,
+            title: "Delete \(alertTitle)",
+            message: "Are you sure you want to delete?",
+            actions: [
+                UIAlertAction(title: "Cancel", style: .cancel),
+                UIAlertAction(title: "Delete", style: .destructive, handler: { [weak self] _ in
+                    self?.deletePhotos(indexes)
+                    controller.dismiss(animated: true)
+                })
+            ]
+        )
+    }
+    
+    func didTapInfo(_ toolBarView: ToolBarView, controller: UIViewController, for index: IndexPath) {
+        guard let photo = photos[safe: index.row] else {
+            return
+        }
+        let vc = PhotoInfoVC()
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.setupData(photo: photo)
+
+        controller.present(vc, animated: false)
+    }
+}

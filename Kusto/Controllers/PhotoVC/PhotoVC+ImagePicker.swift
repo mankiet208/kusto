@@ -36,6 +36,9 @@ extension PhotoVC {
                 // TODO: Remove import photo in library
                 
                 // TODO: Prompt user to remove photo in trash
+                
+                // Update album
+                self.delegate?.didUpdatePhotos(in: self.album)
             }
         })
     }
@@ -62,7 +65,7 @@ extension PhotoVC {
     
     func updateImageStorage(images: [UIImage]) {
         guard let album = album,
-              let albumIndex = album.getIndex() else {
+              let albumIndex = album.index else {
             return
         }
         for image in images {
@@ -70,8 +73,8 @@ extension PhotoVC {
             let imagePath = UIImage.getDocumentsDirectory().appendingPathComponent(imageId)
                     
             // Write photo to documents directory
-            if let jpegData = image.jpegData(compressionQuality: 1) {
-                try? jpegData.write(to: imagePath)
+            if let data = image.jpegData(compressionQuality: 0.8) {
+                try? data.write(to: imagePath)
             }
             
             // Update album model in UserDefaults
@@ -82,7 +85,6 @@ extension PhotoVC {
             photo.saveThumbnail(with: image)
             photos.append(photo)
             UserDefaultsStore.listAlbum[albumIndex].photos.append(photo)
-            delegate?.didUpdatePhotos(in: album)
         }
     }
 }

@@ -9,6 +9,11 @@ import UIKit
 
 extension UIImage {
     
+    var dataSize: String? {
+        let data: Data? = self.pngData()
+        return data?.base64EncodedString(options: .endLineWithLineFeed)
+    }
+    
     static func getDocumentsDirectory() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return paths[0]
@@ -27,18 +32,18 @@ extension UIImage {
                try fileManager.removeItem(at: url)
             }
         } catch {
-            print(error)
+            Logger.log(.error, error.localizedDescription)
         }
     }
     
-    static func clearPhotoCache(photoId: String) {
+    static func clearPhotoCache(with id: String) {
         let fileManager = FileManager.default
         do {
             let documentURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
-            let photoURL = documentURL.appendingPathComponent(photoId)
+            let photoURL = documentURL.appendingPathComponent(id)
             try fileManager.removeItem(at: photoURL)
         } catch {
-            print(error)
+            Logger.log(.error, error.localizedDescription)
         }
       }
     
@@ -50,11 +55,6 @@ extension UIImage {
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return newImage
-    }
-    
-    func toString() -> String? {
-        let data: Data? = self.pngData()
-        return data?.base64EncodedString(options: .endLineWithLineFeed)
     }
 }
 

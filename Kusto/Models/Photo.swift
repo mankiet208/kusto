@@ -22,14 +22,18 @@ struct Photo: Codable {
         return "photo_\(id)"
     }
     
-    private var imagePath: URL {
+    private var url: URL {
         return UIImage.getDocumentsDirectory().appendingPathComponent(id)
     }
     
     // PUBLIC
     
+    var data: Data? {
+        return try? Data(contentsOf: url, options: [])
+    }
+    
     var image: UIImage? {
-        return UIImage(contentsOfFile: imagePath.path)
+        return UIImage(contentsOfFile: url.path)
     }
     
     var thumbnail: UIImage? {
@@ -40,17 +44,13 @@ struct Photo: Codable {
         return image
     }
     
-    var imageSize: String {
-        guard let data = image?.pngData() else {
-            return "Error size"
+    var size: String? {
+        guard let attributes = try? FileManager.default.attributesOfItem(atPath: url.path),
+              let fileSize = attributes[FileAttributeKey.size] as? UInt64 else {
+            return nil
         }
-        let bcf = ByteCountFormatter()
-        bcf.allowedUnits = [.useKB] // optional: restricts the units to MB only
-        bcf.countStyle = .file
-        let string = bcf.string(fromByteCount: Int64(data.count))
-        return string
+        return "\(fileSize / 1024)"
     }
-    
     
     func save() {
         let encoder = JSONEncoder()
@@ -67,7 +67,7 @@ struct Photo: Codable {
     
     func saveImage(image: UIImage, compression: CGFloat = 1) {
         if let jpegData = image.jpegData(compressionQuality: 1) {
-            try? jpegData.write(to: imagePath)
+            try? jpegData.write(to: url)
         }
     }
 }
@@ -96,3 +96,27 @@ struct ViewablePhoto: Viewable {
 }
 
 
+
+extension URL {
+    
+    var attributes: [FileAttributeKey : Any]? {
+        do {
+            return try FileManager.default.attributesOfItem(atPath: path)
+        } catch let error as NSError {
+            print("FileAttribute error: \(error)")
+        }
+        return nil
+    }
+
+    var fileSize: UInt64 {
+        return attributes?[.size] as? UInt64 ?? UInt64(0)
+    }
+
+    var fileSizeString: String {
+        return ByteCountFormatter.string(fromByteCount: Int64(fileSize), countStyle: .file)
+    }
+
+    var creationDate: Date? {
+        return attributes?[.creationDate] as? Date
+    }
+}

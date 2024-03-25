@@ -13,7 +13,7 @@ class AlbumVC: BaseVC {
     
     @IBOutlet weak var tbvAlbum: UITableView!
     
-    //MARK: - PROPERTIES
+    //MARK: - PROPS
     
     var albums: [Album] = UserDefaultsStore.listAlbum
     
