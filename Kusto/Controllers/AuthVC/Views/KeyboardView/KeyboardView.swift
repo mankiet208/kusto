@@ -92,7 +92,12 @@ extension KeyboardView: UICollectionViewDataSource {
         
         switch (keyboardIndex) {
         case 10:
-            cell.btnKeyboard.setImage(UIImage(systemName: "touchid", withConfiguration: imageConfig), for: .normal)
+            if UserDefaultsStore.isBiometricEnabled {
+                cell.btnKeyboard.setImage(UIImage(systemName: "touchid", withConfiguration: imageConfig), for: .normal)
+            } else {
+                cell.isUserInteractionEnabled = false
+                cell.isHidden = true
+            }
         case 11:
             cell.btnKeyboard.setTitle("0", for: .normal)
         case 12:

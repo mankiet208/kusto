@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		047103E925F1D3C50095DA74 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047103E825F1D3C50095DA74 /* AppDelegate.swift */; };
 		047103EB25F1D3C50095DA74 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047103EA25F1D3C50095DA74 /* SceneDelegate.swift */; };
-		047103F025F1D3C50095DA74 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 047103EE25F1D3C50095DA74 /* Main.storyboard */; };
 		047103F225F1D3C70095DA74 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 047103F125F1D3C70095DA74 /* Assets.xcassets */; };
 		047103F525F1D3C70095DA74 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 047103F325F1D3C70095DA74 /* LaunchScreen.storyboard */; };
 		0471040525F1EC2B0095DA74 /* AlbumVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0471040425F1EC2B0095DA74 /* AlbumVC.swift */; };
@@ -46,7 +45,6 @@
 		C35CFF252BAA9FB800E4965D /* KeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C35CFF242BAA9FB800E4965D /* KeychainWrapper.swift */; };
 		C35CFF272BAABD4900E4965D /* KeychainKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C35CFF262BAABD4900E4965D /* KeychainKey.swift */; };
 		C39A8F772BAAEDDE0009524C /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = C39A8F762BAAEDDE0009524C /* FirebaseAnalytics */; };
-		C39A8F792BAAEE030009524C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C39A8F782BAAEE020009524C /* GoogleService-Info.plist */; };
 		C39A8F7B2BABD9110009524C /* PermissionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39A8F7A2BABD9110009524C /* PermissionHelper.swift */; };
 		C39A8F7F2BAC3AA30009524C /* BiometricHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39A8F7E2BAC3AA30009524C /* BiometricHelper.swift */; };
 		C39A8F822BAD29070009524C /* BrightroomEngine in Frameworks */ = {isa = PBXBuildFile; productRef = C39A8F812BAD29070009524C /* BrightroomEngine */; };
@@ -55,19 +53,23 @@
 		C39B60DC2BB12B3A00E90D90 /* PhotoInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39B60DB2BB12B3A00E90D90 /* PhotoInfoVC.swift */; };
 		C39B60DE2BB133F500E90D90 /* Info.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39B60DD2BB133F500E90D90 /* Info.swift */; };
 		C39B60E02BB1354400E90D90 /* Collection+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39B60DF2BB1354400E90D90 /* Collection+Extension.swift */; };
+		C39B60E42BB2CBE500E90D90 /* CustomModalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39B60E32BB2CBE500E90D90 /* CustomModalVC.swift */; };
+		C39B60FA2BB57C4300E90D90 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C39B60F92BB57C4300E90D90 /* GoogleService-Info.plist */; };
 		C3B7982E2BA8418200D98EAF /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B7982D2BA8418200D98EAF /* Theme.swift */; };
 		C3B798302BA8497700D98EAF /* ToolBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B7982F2BA8497700D98EAF /* ToolBarView.swift */; };
 		C3B7983C2BA945B300D98EAF /* AuthVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B7983B2BA945B300D98EAF /* AuthVC.swift */; };
 		C3B7983E2BA96F3C00D98EAF /* KeyboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B7983D2BA96F3C00D98EAF /* KeyboardView.swift */; };
 		C3B798412BA9783D00D98EAF /* KeyboardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B798402BA9783D00D98EAF /* KeyboardCell.swift */; };
 		C3B798432BA9A11300D98EAF /* PinCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B798422BA9A11300D98EAF /* PinCodeView.swift */; };
+		C3BC72FF2BBBFABF00DB2B5B /* TabVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3BC72FE2BBBFABF00DB2B5B /* TabVC.swift */; };
+		C3BC73012BBBFBA100DB2B5B /* SettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3BC73002BBBFBA100DB2B5B /* SettingVC.swift */; };
+		C3C3948D2BD260C300CBB646 /* SwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C3948C2BD260C300CBB646 /* SwitchCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		047103E525F1D3C50095DA74 /* Kusto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kusto.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		047103E825F1D3C50095DA74 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		047103EA25F1D3C50095DA74 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		047103EF25F1D3C50095DA74 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		047103F125F1D3C70095DA74 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		047103F425F1D3C70095DA74 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		047103F625F1D3C70095DA74 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -106,19 +108,23 @@
 		C35CFF222BAA9FA000E4965D /* KeychainItemAccessibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainItemAccessibility.swift; sourceTree = "<group>"; };
 		C35CFF242BAA9FB800E4965D /* KeychainWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainWrapper.swift; sourceTree = "<group>"; };
 		C35CFF262BAABD4900E4965D /* KeychainKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainKey.swift; sourceTree = "<group>"; };
-		C39A8F782BAAEE020009524C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C39A8F7A2BABD9110009524C /* PermissionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionHelper.swift; sourceTree = "<group>"; };
 		C39A8F7E2BAC3AA30009524C /* BiometricHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricHelper.swift; sourceTree = "<group>"; };
 		C39A8F892BAD2C660009524C /* PhotoViewerHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewerHeaderView.swift; sourceTree = "<group>"; };
 		C39B60DB2BB12B3A00E90D90 /* PhotoInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoInfoVC.swift; sourceTree = "<group>"; };
 		C39B60DD2BB133F500E90D90 /* Info.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Info.swift; sourceTree = "<group>"; };
 		C39B60DF2BB1354400E90D90 /* Collection+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Extension.swift"; sourceTree = "<group>"; };
+		C39B60E32BB2CBE500E90D90 /* CustomModalVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomModalVC.swift; sourceTree = "<group>"; };
+		C39B60F92BB57C4300E90D90 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C3B7982D2BA8418200D98EAF /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		C3B7982F2BA8497700D98EAF /* ToolBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolBarView.swift; sourceTree = "<group>"; };
 		C3B7983B2BA945B300D98EAF /* AuthVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthVC.swift; sourceTree = "<group>"; };
 		C3B7983D2BA96F3C00D98EAF /* KeyboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardView.swift; sourceTree = "<group>"; };
 		C3B798402BA9783D00D98EAF /* KeyboardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardCell.swift; sourceTree = "<group>"; };
 		C3B798422BA9A11300D98EAF /* PinCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinCodeView.swift; sourceTree = "<group>"; };
+		C3BC72FE2BBBFABF00DB2B5B /* TabVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabVC.swift; sourceTree = "<group>"; };
+		C3BC73002BBBFBA100DB2B5B /* SettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingVC.swift; sourceTree = "<group>"; };
+		C3C3948C2BD260C300CBB646 /* SwitchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,11 +191,11 @@
 		047103FF25F1E8C40095DA74 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				C3B7983F2BA9782A00D98EAF /* KeyboardView */,
-				C3B798422BA9A11300D98EAF /* PinCodeView.swift */,
+				C3C3948B2BD2609700CBB646 /* Cell */,
 				C3B7982F2BA8497700D98EAF /* ToolBarView.swift */,
 				C35CFF1F2BAA904700E4965D /* UnderlineTextField.swift */,
 				C39A8F892BAD2C660009524C /* PhotoViewerHeaderView.swift */,
+				C39B60E32BB2CBE500E90D90 /* CustomModalVC.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -198,12 +204,13 @@
 			isa = PBXGroup;
 			children = (
 				39D24D95262830560059A389 /* Base */,
+				C3DA85E72C0DCA1B00B8CD9B /* AuthVC */,
 				C39A8F852BAD29A40009524C /* EditVC */,
 				C39B60DA2BAD80B800E90D90 /* AlbumVC */,
 				39D24D97262830560059A389 /* PhotoVC */,
 				39DB154B262D68DE00006D45 /* PhotoDetailVC.swift */,
-				C3B7983B2BA945B300D98EAF /* AuthVC.swift */,
 				C39B60DB2BB12B3A00E90D90 /* PhotoInfoVC.swift */,
+				C3BC73002BBBFBA100DB2B5B /* SettingVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -258,7 +265,6 @@
 			isa = PBXGroup;
 			children = (
 				047103F325F1D3C70095DA74 /* LaunchScreen.storyboard */,
-				047103EE25F1D3C50095DA74 /* Main.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -277,6 +283,7 @@
 			isa = PBXGroup;
 			children = (
 				39D24D96262830560059A389 /* BaseVC.swift */,
+				C3BC72FE2BBBFABF00DB2B5B /* TabVC.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -372,7 +379,7 @@
 		C3B7983A2BA943F500D98EAF /* Config */ = {
 			isa = PBXGroup;
 			children = (
-				C39A8F782BAAEE020009524C /* GoogleService-Info.plist */,
+				C39B60F92BB57C4300E90D90 /* GoogleService-Info.plist */,
 				047103F125F1D3C70095DA74 /* Assets.xcassets */,
 				047103F625F1D3C70095DA74 /* Info.plist */,
 			);
@@ -386,6 +393,32 @@
 				C3B798402BA9783D00D98EAF /* KeyboardCell.swift */,
 			);
 			path = KeyboardView;
+			sourceTree = "<group>";
+		};
+		C3C3948B2BD2609700CBB646 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				C3C3948C2BD260C300CBB646 /* SwitchCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		C3DA85E72C0DCA1B00B8CD9B /* AuthVC */ = {
+			isa = PBXGroup;
+			children = (
+				C3DA85E82C0DCA4C00B8CD9B /* Views */,
+				C3B7983B2BA945B300D98EAF /* AuthVC.swift */,
+			);
+			path = AuthVC;
+			sourceTree = "<group>";
+		};
+		C3DA85E82C0DCA4C00B8CD9B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C3B7983F2BA9782A00D98EAF /* KeyboardView */,
+				C3B798422BA9A11300D98EAF /* PinCodeView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		F4B24CC95DE4360DA8B09F8D /* Pods */ = {
@@ -468,10 +501,9 @@
 			files = (
 				047103F525F1D3C70095DA74 /* LaunchScreen.storyboard in Resources */,
 				047103F225F1D3C70095DA74 /* Assets.xcassets in Resources */,
-				047103F025F1D3C50095DA74 /* Main.storyboard in Resources */,
 				0471042425F224010095DA74 /* AlbumCell.xib in Resources */,
 				39D24DC2262831E60059A389 /* PhotoCell.xib in Resources */,
-				C39A8F792BAAEE030009524C /* GoogleService-Info.plist in Resources */,
+				C39B60FA2BB57C4300E90D90 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -544,6 +576,7 @@
 				39DB154C262D68DE00006D45 /* PhotoDetailVC.swift in Sources */,
 				047104A025F726DD0095DA74 /* UserDefaults+Extension.swift in Sources */,
 				39D24DC1262831E60059A389 /* PhotoCell.swift in Sources */,
+				C3BC73012BBBFBA100DB2B5B /* SettingVC.swift in Sources */,
 				39D24DB6262830DD0059A389 /* Logger.swift in Sources */,
 				047103E925F1D3C50095DA74 /* AppDelegate.swift in Sources */,
 				C35CFF232BAA9FA000E4965D /* KeychainItemAccessibility.swift in Sources */,
@@ -555,6 +588,7 @@
 				C39B60DC2BB12B3A00E90D90 /* PhotoInfoVC.swift in Sources */,
 				0471040525F1EC2B0095DA74 /* AlbumVC.swift in Sources */,
 				C3B798432BA9A11300D98EAF /* PinCodeView.swift in Sources */,
+				C39B60E42BB2CBE500E90D90 /* CustomModalVC.swift in Sources */,
 				C3B7983C2BA945B300D98EAF /* AuthVC.swift in Sources */,
 				C39A8F7F2BAC3AA30009524C /* BiometricHelper.swift in Sources */,
 				C39B60DE2BB133F500E90D90 /* Info.swift in Sources */,
@@ -568,12 +602,14 @@
 				047104A925F72D5E0095DA74 /* AlbumCellViewModel.swift in Sources */,
 				C39A8F8A2BAD2C660009524C /* PhotoViewerHeaderView.swift in Sources */,
 				39D24DA7262830890059A389 /* UIViewController+Extension.swift in Sources */,
+				C3C3948D2BD260C300CBB646 /* SwitchCell.swift in Sources */,
 				39D24DB0262830CA0059A389 /* String+Extension.swift in Sources */,
 				39D24DA5262830890059A389 /* UIView+Extension.swift in Sources */,
 				39D24DB8262830DD0059A389 /* UserDefaultsStore.swift in Sources */,
 				39D24DA4262830890059A389 /* UIColor+Extension.swift in Sources */,
 				39D24DB7262830DD0059A389 /* UserDefaultsWrapper.swift in Sources */,
 				39D24D9B262830560059A389 /* PhotoVC+ImagePicker.swift in Sources */,
+				C3BC72FF2BBBFABF00DB2B5B /* TabVC.swift in Sources */,
 				C39B60E02BB1354400E90D90 /* Collection+Extension.swift in Sources */,
 				047104A525F727FB0095DA74 /* Photo.swift in Sources */,
 				C3B7982E2BA8418200D98EAF /* Theme.swift in Sources */,
@@ -591,14 +627,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		047103EE25F1D3C50095DA74 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				047103EF25F1D3C50095DA74 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		047103F325F1D3C70095DA74 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -737,6 +765,7 @@
 				INFOPLIST_FILE = Kusto/Config/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Kusto;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -762,6 +791,7 @@
 				INFOPLIST_FILE = Kusto/Config/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Kusto;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

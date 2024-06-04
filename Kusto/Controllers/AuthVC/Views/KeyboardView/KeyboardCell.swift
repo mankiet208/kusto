@@ -38,7 +38,7 @@ class KeyboardCell: UICollectionViewCell {
         
         layer.cornerRadius = 8
         layer.masksToBounds = true
-        backgroundColor = theme.border
+        backgroundColor = theme.surface
     }
 }
 

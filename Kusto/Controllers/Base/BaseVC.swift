@@ -44,10 +44,11 @@ class BaseVC: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.baseDelegate = nil
-        
+                
         NotificationCenter.default.removeObserver(self, name: UIApplication.willResignActiveNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name:  UIApplication.didBecomeActiveNotification, object: nil)
+        
+        baseDelegate = nil
     }
     
     @objc func rightNavigationButtonClicked(_ sender: AnyObject) {

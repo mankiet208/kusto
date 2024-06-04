@@ -50,7 +50,9 @@ class AuthVC: BaseVC {
         vwKeyboard.delegate = self
         pinView.delegate = self
         
-        showBiometric()
+        if UserDefaultsStore.isBiometricEnabled {
+            showBiometric()
+        }
     }
     
     //MARK: - CONFIG
@@ -89,28 +91,11 @@ class AuthVC: BaseVC {
     //MARK: - FUNCTION
     
     private func showBiometric() {
-        let context = LAContext()
-        var error: NSError?
-        
-        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
-            let reason = "Identify yourself!"
-            
-            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) {
-                [weak self] success, authenticationError in
-                
-                DispatchQueue.main.async {
-                    if success {
-                        self?.dismiss(animated: true)
-                    } else {
-                        // error
-                        print("> Biometric error")
-                    }
-                }
-            }
-        } else {
-            // no biometry
+        BiometricHelper.show {
+            self.dismiss(animated: true)
+        } onError: { error in
             if let error = error {
-                print(error)
+                Logger.log(.error, error)
             }
         }
     }
@@ -147,6 +132,11 @@ extension AuthVC: KeyboardViewDelegate {
             AlertView.showAlert(self, title: "Biometric is not enrolled", message: "Please enable your Face/Touch Id", actions: [])
             return
         }
+        
+        guard UserDefaultsStore.isBiometricEnabled else {
+            return
+        }
+        
         if myPIN == nil {
             AlertView.showAlert(self, title: "", message: "Please setup your PIN", actions: [])
         } else {
@@ -159,7 +149,7 @@ extension AuthVC: PinCodeViewDelegate {
     
     func onSubmitPin(_ pin: String) {
         if myPIN == nil {
-            AlertView.showAlert(self, title: "Confirm PIN code", message: nil, actions: [
+            AlertView.showAlert(self, title: "Are you sure?", message: nil, actions: [
                 UIAlertAction(title: "Reset", style: .default, handler: { _ in
                     self.pinView.clearPin()
                 }),

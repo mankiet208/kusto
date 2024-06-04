@@ -18,15 +18,26 @@ protocol PhotoVCDelegate: AnyObject {
 
 class PhotoVC: BaseVC {
     
-    //MARK: - OUTLETS
-    
-    @IBOutlet weak var clvPhoto: UICollectionView!
-    
     //MARK: - CONSTANTS
     
     private let viewBottomConstraint: CGFloat = 80
     
     //MARK: - UI
+    
+    lazy var clvPhoto: UICollectionView = {
+        let collection = UICollectionView(frame: .zero,
+                                          collectionViewLayout: UICollectionViewFlowLayout.init())
+        collection.register(PhotoCell.nib(), forCellWithReuseIdentifier: PhotoCell.identifier)
+        collection.dataSource = self
+        collection.delegate = self
+        collection.alwaysBounceVertical = true
+        collection.allowsMultipleSelection = false
+        collection.isEditing = false
+        collection.backgroundColor = .clear
+        collection.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: viewBottomConstraint, right: 0)
+        collection.translatesAutoresizingMaskIntoConstraints = false
+        return collection
+    }()
     
     lazy private var vwToolBar: ToolBarView = {
         let toolBar = ToolBarView()
@@ -65,12 +76,32 @@ class PhotoVC: BaseVC {
         return button
     }()
     
+    lazy private var btnEdit: UIBarButtonItem = {
+        let button = UIBarButtonItem(
+            barButtonSystemItem: .edit,
+            target: self,
+            action: #selector(didTapRightBarButton)
+        )
+        button.tintColor = UIColor.primary
+        return button
+    }()
+    
+    lazy private var btnDone: UIBarButtonItem = {
+        let button = UIBarButtonItem(
+            barButtonSystemItem: .done,
+            target: self,
+            action: #selector(didTapRightBarButton)
+        )
+        button.tintColor = UIColor.primary
+        return button
+    }()
     
     //MARK: - PROPS
     
     weak var delegate: PhotoVCDelegate?
     
     var album: Album!
+    
     var photos = [Photo]()
     
     var selectedIndex = [IndexPath]() {
@@ -86,19 +117,12 @@ class PhotoVC: BaseVC {
             if isEditingMode {
                 hideAddButton()
                 showToolBar()
-                navigationItem.rightBarButtonItem = UIBarButtonItem(
-                    barButtonSystemItem: .done,
-                    target: self,
-                    action: #selector(didTapRightBarButton)
-                )
+                navigationItem.rightBarButtonItem = btnDone
             } else {
                 showAddButton()
                 hideToolBar()
-                navigationItem.rightBarButtonItem  = UIBarButtonItem(
-                    barButtonSystemItem: .edit,
-                    target: self,
-                    action: #selector(didTapRightBarButton)
-                )
+                navigationItem.rightBarButtonItem  = btnEdit
+                
                 for indexPath in selectedIndex {
                     if let cell = clvPhoto.cellForItem(at: indexPath) as? PhotoCell {
                         cell.toggleSelected(false)
@@ -116,20 +140,15 @@ class PhotoVC: BaseVC {
         super.viewDidLoad()
         
         setupView()
-        setupCollectionView()
         setupData()
+        
+        btnEdit.isHidden = photos.isEmpty
     }
     
     //MARK: - CONFIG
     
     override func setupRightBarButton() {
-        let addButton = UIBarButtonItem(
-            barButtonSystemItem: .edit,
-            target: self,
-            action: #selector(didTapRightBarButton)
-        )
-        addButton.tintColor = UIColor.primary
-        navigationItem.rightBarButtonItem = addButton
+        navigationItem.rightBarButtonItem = btnEdit
     }
     
     @objc func didTapRightBarButton() {
@@ -144,18 +163,8 @@ extension PhotoVC {
         title = album.name
         view.addSubview(btnAdd)
         view.addSubview(vwToolBar)
-    }
-    
-    private func setupCollectionView() {
-        clvPhoto.register(PhotoCell.nib(), forCellWithReuseIdentifier: PhotoCell.identifier)
-        clvPhoto.collectionViewLayout = UICollectionViewFlowLayout()
-        clvPhoto.dataSource = self
-        clvPhoto.delegate = self
-        clvPhoto.alwaysBounceVertical = true
-        clvPhoto.allowsMultipleSelection = false
-        clvPhoto.isEditing = false
-        clvPhoto.backgroundColor = .clear
-        clvPhoto.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: viewBottomConstraint, right: 0)
+        
+        clvPhoto.pinEdgesToSuperView()
     }
     
     private func showAddButton() {
@@ -437,44 +446,37 @@ extension PhotoVC: PhotoViewerHeaderViewDelegate {
               let image = photos[indexPath.row].image else {
             return
         }
-        let imageProvider = ImageProvider(image: image)
-        
-        let editingStack = EditingStack(imageProvider: imageProvider)
-        
-        let options = ClassicImageEditOptions.default
-        
-        let editController = ClassicImageEditViewController(editingStack: editingStack, options: options)
-        
-        let navigationController = UINavigationController(rootViewController: editController)
-        navigationController.modalPresentationStyle = .fullScreen
+        let editController = PhotosCropViewController(imageProvider: .init(image: image))
+        editController.modalPresentationStyle = .fullScreen
 
         // Handlers
-        editController.handlers.didCancelEditing = { vc in
-            navigationController.dismiss(animated: true)
+        editController.handlers.didCancel = { vc in
+            editController.dismiss(animated: true)
         }
-        editController.handlers.didEndEditing = { [weak self] vc, editStack in
+        editController.handlers.didFinish = { [weak self] vc in
             guard let self = self else { return }
             var image: UIImage?
+            let editingStack = vc.editingStack
             
             do {
-                let rendered = try editStack.makeRenderer().render()
+                let rendered = try editingStack.makeRenderer().render()
                 let imgData = rendered.makeOptimizedForSharingData(dataType: .png)
                 image = UIImage(data: imgData)
             } catch {
-                print("error?", error)
+                Logger.log(.error, error.localizedDescription)
             }
-            
+
             if let image = image {
                 self.photos[indexPath.row].saveImage(image: image)
                 self.photos[indexPath.row].saveThumbnail(with: image)
                 self.clvPhoto.reloadData()
-                navigationController.dismiss(animated: true)
+                editController.dismiss(animated: true)
             }
         }
         
         // Show edit screen
         viewerController.dismiss { [weak self] in
-            self?.present(navigationController, animated: true, completion: nil)
+            self?.present(editController, animated: true, completion: nil)
         }
     }
 }
@@ -512,9 +514,13 @@ extension PhotoVC: ToolBarViewDelegate {
             return
         }
         let vc = PhotoInfoVC()
-        vc.modalPresentationStyle = .overCurrentContext
         vc.setupData(photo: photo)
-
-        controller.present(vc, animated: false)
+        
+        let nav = UINavigationController(rootViewController: vc)
+        if let sheet = nav.sheetPresentationController {
+            sheet.detents = [.medium()]
+            sheet.prefersGrabberVisible = true
+        }
+        controller.present(nav, animated: true)
     }
 }

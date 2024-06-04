@@ -10,17 +10,27 @@ import UIKit
 //MARK: - CONSTRAINT
 extension UIView {
     
-    func pinEdgesToSuperView() {
+    func pinEdgesToSuperView(useSafeLayoutGuide: Bool = false) {
         guard let superview = superview else {
             return
         }
         translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            self.topAnchor.constraint(equalTo: superview.topAnchor),
-            self.bottomAnchor.constraint(equalTo: superview.bottomAnchor),
-            self.leadingAnchor.constraint(equalTo: superview.leadingAnchor),
-            self.trailingAnchor.constraint(equalTo: superview.trailingAnchor),
-        ])
+        if useSafeLayoutGuide {
+            NSLayoutConstraint.activate([
+                self.topAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.topAnchor),
+                self.bottomAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.bottomAnchor),
+                self.leadingAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.leadingAnchor),
+                self.trailingAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.trailingAnchor),
+            ])
+        } else {
+            NSLayoutConstraint.activate([
+                self.topAnchor.constraint(equalTo: superview.topAnchor),
+                self.bottomAnchor.constraint(equalTo: superview.bottomAnchor),
+                self.leadingAnchor.constraint(equalTo: superview.leadingAnchor),
+                self.trailingAnchor.constraint(equalTo: superview.trailingAnchor),
+            ])
+        }
+       
     }
     
     func constraintSize(width: CGFloat, height: CGFloat) {

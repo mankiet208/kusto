@@ -6,12 +6,31 @@
 //
 
 import UIKit
+import GoogleMobileAds
 
 class AlbumVC: BaseVC {
     
-    //MARK: - OUTLETS
+    //MARK: - UI
+        
+    lazy private var tbvAlbum: UITableView = {
+        let table = UITableView()
+        table.register(AlbumCell.nib(), forCellReuseIdentifier: AlbumCell.identifier)
+        table.dataSource = self
+        table.delegate = self
+        table.separatorColor = .clear
+        table.backgroundColor = .clear
+        table.translatesAutoresizingMaskIntoConstraints = false
+        return table
+    }()
     
-    @IBOutlet weak var tbvAlbum: UITableView!
+//    lazy private var banner: GADBannerView = {
+//        let banner = GADBannerView()
+//        banner.rootViewController = self
+//        banner.adUnitID = "ca-app-pub-3940256099942544/2435281174"
+//        banner.backgroundColor = UIColor.gray300
+//        banner.load(GADRequest())
+//        return banner
+//    }()
     
     //MARK: - PROPS
     
@@ -22,22 +41,25 @@ class AlbumVC: BaseVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Album"
+        setupView()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         
-        setupTableView()
+//        banner.frame = CGRect(x: 0, y: view.frame.height - 100, width: view.frame.width, height: 50).integral
     }
     
     //MARK: - CONFIG
     
-    private func setupTableView() {
-        tbvAlbum.register(AlbumCell.nib(), forCellReuseIdentifier: AlbumCell.identifier)
+    private func setupView() {
+        title = "Album"
         
-        tbvAlbum.dataSource = self
-        tbvAlbum.delegate = self
+//        view.addSubview(banner)
+        view.addSubview(tbvAlbum)
         
-        tbvAlbum.alwaysBounceVertical = true
-        tbvAlbum.separatorColor = .clear
-        tbvAlbum.backgroundColor = .clear
+        
+        tbvAlbum.pinEdgesToSuperView(useSafeLayoutGuide: true)
     }
     
     override func setupRightBarButton() {
@@ -135,12 +157,10 @@ extension AlbumVC: UITableViewDataSource {
 extension AlbumVC: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let photoVC = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "PhotoVC") as? PhotoVC else {
-            return
-        }
+        let photoVC =  PhotoVC()
         photoVC.delegate = self
         photoVC.album = albums[indexPath.row]
-        self.push(photoVC)
+        push(photoVC, hideBottomBar: true)
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

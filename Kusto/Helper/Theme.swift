@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum Theme: Int {
+enum Theme: String {
     case light, dark
     
     var primary: UIColor {
@@ -24,16 +24,16 @@ enum Theme: Int {
         case .light:
             return UIColor.gray100
         case .dark:
-            return UIColor.gray975
+            return UIColor.gray950
         }
     }
     
     var onBackground: UIColor {
         switch self {
         case .light:
-            return UIColor.primary
+            return UIColor.black
         case .dark:
-            return UIColor.primary
+            return UIColor.white
         }
     }
     
@@ -46,7 +46,7 @@ enum Theme: Int {
         }
     }
     
-    var border: UIColor {
+    var surface: UIColor {
         switch self {
         case .light:
             return UIColor.gray200
