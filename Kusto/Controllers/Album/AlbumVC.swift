@@ -23,15 +23,6 @@ class AlbumVC: BaseVC {
         return table
     }()
     
-//    lazy private var banner: GADBannerView = {
-//        let banner = GADBannerView()
-//        banner.rootViewController = self
-//        banner.adUnitID = "ca-app-pub-3940256099942544/2435281174"
-//        banner.backgroundColor = UIColor.gray300
-//        banner.load(GADRequest())
-//        return banner
-//    }()
-    
     //MARK: - PROPS
     
     var albums: [Album] = UserDefaultsStore.listAlbum
@@ -42,22 +33,21 @@ class AlbumVC: BaseVC {
         super.viewDidLoad()
         
         setupView()
+        applyTheme()
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-//        banner.frame = CGRect(x: 0, y: view.frame.height - 100, width: view.frame.width, height: 50).integral
+    //MARK: - PUBLIC
+
+    func applyTheme() {
+        view.backgroundColor = theme.background
     }
     
-    //MARK: - CONFIG
+    //MARK: - PRIVATE
     
     private func setupView() {
         title = "Album"
         
-//        view.addSubview(banner)
         view.addSubview(tbvAlbum)
-        
         
         tbvAlbum.pinEdgesToSuperView(useSafeLayoutGuide: true)
     }
@@ -72,7 +62,7 @@ class AlbumVC: BaseVC {
         navigationItem.rightBarButtonItem = backButtonItem
     }
     
-    @objc func didTapRightBarButton() {
+    @objc private func didTapRightBarButton() {
         let alertVC = UIAlertController(
             title: "Add album",
             message: "Input album name",

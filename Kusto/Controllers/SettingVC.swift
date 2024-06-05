@@ -8,7 +8,6 @@
 import UIKit
 
 enum SettingItem {
-    case theme
     case biometric
     case changePin
     case share
@@ -18,29 +17,23 @@ extension SettingItem {
     
     var text: String {
         switch self {
-        case .theme:
-            return "Theme"
         case .biometric:
             return "Biometric"
         case .changePin:
             return "Change Pin code"
         case .share:
             return "Share app"
-            
         }
     }
     
     var icon: String {
         switch self {
-        case .theme:
-            return "moon.stars.fill"
         case .biometric:
             return "faceid"
         case .changePin:
             return "lock.fill"
         case .share:
             return "square.and.arrow.up.fill"
-            
         }
     }
 }
@@ -72,7 +65,7 @@ class SettingVC: BaseVC {
     //MARK: - PROPS
     
     let settingItems: [SettingItem] = [
-        .theme, .biometric, .changePin, .share
+        .biometric, .changePin, .share
     ]
     
     //MARK: - INIT
@@ -81,6 +74,7 @@ class SettingVC: BaseVC {
         super.viewDidLoad()
         
         setupView()
+        applyTheme()
     }
     
     //MARK: - CONFIG
@@ -94,6 +88,13 @@ class SettingVC: BaseVC {
         tbvSettings.tableFooterView = lblFooter
         tbvSettings.register(UITableViewCell.self, forCellReuseIdentifier: "UITableViewCell")
         tbvSettings.register(SwitchCell.self, forCellReuseIdentifier: SwitchCell.identifider)
+    }
+    
+    func applyTheme() {
+        view.backgroundColor = theme.background
+        tbvSettings.backgroundColor = theme.background
+        tbvSettings.separatorColor = .clear
+        tbvSettings.reloadData()
     }
 }
 
@@ -134,7 +135,10 @@ extension SettingVC: UITableViewDataSource {
         // Configure content.
         content.prefersSideBySideTextAndSecondaryText = true
         content.image = UIImage(systemName: item.icon)
+        content.imageProperties.tintColor = theme.onBackground
+        
         content.text = item.text
+        content.textProperties.color = theme.onBackground
         
         content.secondaryTextProperties.font = UIFont.systemFont(ofSize: 17)
         content.secondaryTextProperties.color = .gray
@@ -150,6 +154,10 @@ extension SettingVC: UITableViewDataSource {
 }
 
 extension SettingVC: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.backgroundColor = .clear
+    }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         return UIView(frame: CGRectMake(0, 0, tableView.bounds.size.width, 20))

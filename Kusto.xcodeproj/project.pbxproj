@@ -204,12 +204,10 @@
 			isa = PBXGroup;
 			children = (
 				39D24D95262830560059A389 /* Base */,
-				C3DA85E72C0DCA1B00B8CD9B /* AuthVC */,
-				C39A8F852BAD29A40009524C /* EditVC */,
-				C39B60DA2BAD80B800E90D90 /* AlbumVC */,
-				39D24D97262830560059A389 /* PhotoVC */,
-				39DB154B262D68DE00006D45 /* PhotoDetailVC.swift */,
-				C39B60DB2BB12B3A00E90D90 /* PhotoInfoVC.swift */,
+				C3DA85E72C0DCA1B00B8CD9B /* Auth */,
+				C39B60DA2BAD80B800E90D90 /* Album */,
+				39D24D97262830560059A389 /* Photo */,
+				C39A8F852BAD29A40009524C /* Edit */,
 				C3BC73002BBBFBA100DB2B5B /* SettingVC.swift */,
 			);
 			path = Controllers;
@@ -288,14 +286,16 @@
 			path = Base;
 			sourceTree = "<group>";
 		};
-		39D24D97262830560059A389 /* PhotoVC */ = {
+		39D24D97262830560059A389 /* Photo */ = {
 			isa = PBXGroup;
 			children = (
 				39D24DBE262831E60059A389 /* PhotoCell */,
 				39D24D99262830560059A389 /* PhotoVC.swift */,
+				39DB154B262D68DE00006D45 /* PhotoDetailVC.swift */,
 				39D24D98262830560059A389 /* PhotoVC+ImagePicker.swift */,
+				C39B60DB2BB12B3A00E90D90 /* PhotoInfoVC.swift */,
 			);
-			path = PhotoVC;
+			path = Photo;
 			sourceTree = "<group>";
 		};
 		39D24D9F262830890059A389 /* UIKit */ = {
@@ -360,20 +360,20 @@
 			path = Biometric;
 			sourceTree = "<group>";
 		};
-		C39A8F852BAD29A40009524C /* EditVC */ = {
+		C39A8F852BAD29A40009524C /* Edit */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			path = EditVC;
+			path = Edit;
 			sourceTree = "<group>";
 		};
-		C39B60DA2BAD80B800E90D90 /* AlbumVC */ = {
+		C39B60DA2BAD80B800E90D90 /* Album */ = {
 			isa = PBXGroup;
 			children = (
 				0471042725F224050095DA74 /* AlbumCell */,
 				0471040425F1EC2B0095DA74 /* AlbumVC.swift */,
 			);
-			path = AlbumVC;
+			path = Album;
 			sourceTree = "<group>";
 		};
 		C3B7983A2BA943F500D98EAF /* Config */ = {
@@ -403,13 +403,13 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
-		C3DA85E72C0DCA1B00B8CD9B /* AuthVC */ = {
+		C3DA85E72C0DCA1B00B8CD9B /* Auth */ = {
 			isa = PBXGroup;
 			children = (
 				C3DA85E82C0DCA4C00B8CD9B /* Views */,
 				C3B7983B2BA945B300D98EAF /* AuthVC.swift */,
 			);
-			path = AuthVC;
+			path = Auth;
 			sourceTree = "<group>";
 		};
 		C3DA85E82C0DCA4C00B8CD9B /* Views */ = {

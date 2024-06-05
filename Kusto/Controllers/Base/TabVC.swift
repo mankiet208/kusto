@@ -9,6 +9,9 @@ import UIKit
 
 class TabVC: UITabBarController {
     
+    let albumVC = AlbumVC()
+    let settingVC = SettingVC()
+    
     override public func viewDidLoad() {
         super.viewDidLoad()
         
@@ -22,21 +25,25 @@ class TabVC: UITabBarController {
     }
     
     private func setupViewControllers() {
-        let albumVC = AlbumVC()
         let tabBarItem_1 = UITabBarItem(title: "Album",
                                         image: UIImage(systemName: "house"),
                                         selectedImage: UIImage(systemName: "house.fill"))
-        albumVC.tabBarItem = tabBarItem_1
-        let navigationVC_1 = UINavigationController(rootViewController: albumVC)
-        
-        let settingVC = SettingVC()
         let tabBarItem_2 = UITabBarItem(title: "Settings",
                                         image: UIImage(systemName: "gearshape"),
                                         selectedImage: UIImage(systemName: "gearshape.fill"))
+        
+        albumVC.tabBarItem = tabBarItem_1
         settingVC.tabBarItem = tabBarItem_2
+        
+        let navigationVC_1 = UINavigationController(rootViewController: albumVC)
         let navigationVC_2 = UINavigationController(rootViewController: settingVC)
         
         viewControllers = [navigationVC_1, navigationVC_2]
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        albumVC.applyTheme()
+        settingVC.applyTheme()
     }
 }
 

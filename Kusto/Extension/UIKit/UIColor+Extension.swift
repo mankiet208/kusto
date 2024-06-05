@@ -48,6 +48,22 @@ extension UIColor {
     static var gray300: UIColor {
         return UIColor(hexString: "#E0E0E0")
     }
+    
+    static var gray400: UIColor {
+        return UIColor(hexString: "#BDBDBD")
+    }
+    
+    static var gray500: UIColor {
+        return UIColor(hexString: "#9E9E9E")
+    }
+    
+    static var gray600: UIColor {
+        return UIColor(hexString: "#959595")
+    }
+    
+    static var gray700: UIColor {
+        return UIColor(hexString: "#616161")
+    }
         
     static var gray800: UIColor {
         return UIColor(hexString: "#5D5D5D")

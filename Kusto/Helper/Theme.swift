@@ -63,4 +63,28 @@ enum Theme: String {
             return UIColor.gray975
         }
     }
+    
+    var border: UIColor {
+        switch self {
+        case .light:
+            return UIColor.gray600
+        case .dark:
+            return UIColor.gray400
+        }
+    }
+}
+
+extension UIViewController {
+    
+    var theme: Theme {
+        get {
+            return isDarkMode ? Theme.dark : Theme.light
+        }
+    }
+    
+    var isDarkMode: Bool {
+        get {
+            return traitCollection.userInterfaceStyle == .dark
+        }
+    }
 }
