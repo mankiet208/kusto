@@ -179,6 +179,9 @@ extension SettingVC: UITableViewDelegate {
                                     actions: [])
                 return
             }
+        case .changePin:
+            let changePinVC = ChangePinVC()
+            push(changePinVC, hideBottomBar: true)
         default: ()
         }
     }

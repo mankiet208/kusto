@@ -1,14 +1,13 @@
 //
-//  AuthVC.swift
+//  ChangePinVC.swift
 //  Kusto
 //
-//  Created by Kiet Truong on 19/03/2024.
+//  Created by Kiet Truong on 05/06/2024.
 //
 
 import UIKit
-import LocalAuthentication
 
-class AuthVC: BaseVC {
+class ChangePinVC: BaseVC {
     
     //MARK: - UI
     
@@ -49,15 +48,13 @@ class AuthVC: BaseVC {
         setupView()
         vwKeyboard.delegate = self
         pinView.delegate = self
-        
-        if UserDefaultsStore.isBiometricEnabled {
-            showBiometric()
-        }
     }
     
     //MARK: - PRIVATE
     
-    private func setupView() {        
+    private func setupView() {
+        lblTitle.text = "Change your PIN"
+        
         view.addSubview(lblTitle)
         NSLayoutConstraint.activate([
             lblTitle.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -80,42 +77,20 @@ class AuthVC: BaseVC {
             vwKeyboard.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             vwKeyboard.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.35)
         ])
-        
-        if myPIN != nil {
-            lblTitle.text = "Enter your PIN"
-        } else {
-            lblTitle.text = "Setup your PIN"
-        }
-    }
-        
-    private func showBiometric() {
-        BiometricHelper.show {
-            self.dismiss(animated: true)
-        } onError: { error in
-            if let error = error {
-                Logger.log(.error, error)
-            }
-        }
     }
     
     private func confirmPIN(_ pin: String) {
-        if myPIN == nil {
-            KeychainWrapper.standard.set(pin, forKey: KeychainWrapper.pinCode)
-            dismiss(animated: true)
-        } else {
-            if myPIN == pin {
-                dismiss(animated: true)
-            } else {
-                // Wrong PIN
-                pinView.shake() { [weak self] in
-                    self?.pinView.clearPin()
-                }
-            }
-        }
+        KeychainWrapper.standard.set(pin, forKey: KeychainWrapper.pinCode)
+        
+        AlertView.showAlert(self, title: "PIN has changed", message: nil, actions: [
+            UIAlertAction(title: "OK", style: .default, handler: { [weak self] _ in
+                self?.pop()
+            })
+        ])
     }
 }
 
-extension AuthVC: KeyboardViewDelegate {
+extension ChangePinVC: KeyboardViewDelegate {
     
     func didTapNumberKey(_ key: Int) {
         pinView.addPin("\(key)")
@@ -125,28 +100,20 @@ extension AuthVC: KeyboardViewDelegate {
         pinView.removePin()
     }
     
-    func didTapBiometric() {
-        guard BiometricHelper.isEnrolled else {
-            AlertView.showAlert(self, title: "Biometric is not enrolled", message: "Please enable your Face/Touch Id", actions: [])
-            return
-        }
-        
-        guard UserDefaultsStore.isBiometricEnabled else {
-            return
-        }
-        
-        if myPIN == nil {
-            AlertView.showAlert(self, title: "", message: "Please setup your PIN", actions: [])
-        } else {
-            showBiometric()
-        }
-    }
+    func didTapBiometric() {}
 }
 
-extension AuthVC: PinCodeViewDelegate {
+extension ChangePinVC: PinCodeViewDelegate {
     
     func onSubmitPin(_ pin: String) {
-        if myPIN == nil {
+        
+        if myPIN == pin {
+            AlertView.showAlert(self, title: "Please choose a new PIN", message: nil, actions: [
+                UIAlertAction(title: "OK", style: .default, handler: { [weak self] _ in
+                    self?.pinView.clearPin()
+                })
+            ])
+        } else {
             AlertView.showAlert(self, title: "Are you sure?", message: nil, actions: [
                 UIAlertAction(title: "Reset", style: .default, handler: { _ in
                     self.pinView.clearPin()
@@ -155,8 +122,6 @@ extension AuthVC: PinCodeViewDelegate {
                     self?.confirmPIN(pin)
                 })
             ])
-        } else {
-            confirmPIN(pin)
         }
     }
 }

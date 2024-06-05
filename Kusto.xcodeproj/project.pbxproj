@@ -55,6 +55,7 @@
 		C39B60E02BB1354400E90D90 /* Collection+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39B60DF2BB1354400E90D90 /* Collection+Extension.swift */; };
 		C39B60E42BB2CBE500E90D90 /* CustomModalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39B60E32BB2CBE500E90D90 /* CustomModalVC.swift */; };
 		C39B60FA2BB57C4300E90D90 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C39B60F92BB57C4300E90D90 /* GoogleService-Info.plist */; };
+		C3AF23912C1053530030E08E /* ChangePinVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3AF23902C1053530030E08E /* ChangePinVC.swift */; };
 		C3B7982E2BA8418200D98EAF /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B7982D2BA8418200D98EAF /* Theme.swift */; };
 		C3B798302BA8497700D98EAF /* ToolBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B7982F2BA8497700D98EAF /* ToolBarView.swift */; };
 		C3B7983C2BA945B300D98EAF /* AuthVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B7983B2BA945B300D98EAF /* AuthVC.swift */; };
@@ -116,6 +117,7 @@
 		C39B60DF2BB1354400E90D90 /* Collection+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Extension.swift"; sourceTree = "<group>"; };
 		C39B60E32BB2CBE500E90D90 /* CustomModalVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomModalVC.swift; sourceTree = "<group>"; };
 		C39B60F92BB57C4300E90D90 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		C3AF23902C1053530030E08E /* ChangePinVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePinVC.swift; sourceTree = "<group>"; };
 		C3B7982D2BA8418200D98EAF /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		C3B7982F2BA8497700D98EAF /* ToolBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolBarView.swift; sourceTree = "<group>"; };
 		C3B7983B2BA945B300D98EAF /* AuthVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthVC.swift; sourceTree = "<group>"; };
@@ -208,7 +210,7 @@
 				C39B60DA2BAD80B800E90D90 /* Album */,
 				39D24D97262830560059A389 /* Photo */,
 				C39A8F852BAD29A40009524C /* Edit */,
-				C3BC73002BBBFBA100DB2B5B /* SettingVC.swift */,
+				C3AF238F2C1053350030E08E /* Settings */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -374,6 +376,15 @@
 				0471040425F1EC2B0095DA74 /* AlbumVC.swift */,
 			);
 			path = Album;
+			sourceTree = "<group>";
+		};
+		C3AF238F2C1053350030E08E /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				C3BC73002BBBFBA100DB2B5B /* SettingVC.swift */,
+				C3AF23902C1053530030E08E /* ChangePinVC.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		C3B7983A2BA943F500D98EAF /* Config */ = {
@@ -600,6 +611,7 @@
 				0471042325F224010095DA74 /* AlbumCell.swift in Sources */,
 				C39A8F7B2BABD9110009524C /* PermissionHelper.swift in Sources */,
 				047104A925F72D5E0095DA74 /* AlbumCellViewModel.swift in Sources */,
+				C3AF23912C1053530030E08E /* ChangePinVC.swift in Sources */,
 				C39A8F8A2BAD2C660009524C /* PhotoViewerHeaderView.swift in Sources */,
 				39D24DA7262830890059A389 /* UIViewController+Extension.swift in Sources */,
 				C3C3948D2BD260C300CBB646 /* SwitchCell.swift in Sources */,
