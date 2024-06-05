@@ -16,4 +16,7 @@ struct UserDefaultsStore {
     
     @UserDefaultsWrapper("list_album", defaultValue: [])
     static var listAlbum: [Album]
+    
+    @UserDefaultsWrapper("theme_mode", defaultValue: ThemeMode.system)
+    static var themeMode: ThemeMode
 }

@@ -64,6 +64,8 @@
 		C3BC72FF2BBBFABF00DB2B5B /* TabVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3BC72FE2BBBFABF00DB2B5B /* TabVC.swift */; };
 		C3BC73012BBBFBA100DB2B5B /* SettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3BC73002BBBFBA100DB2B5B /* SettingVC.swift */; };
 		C3C3948D2BD260C300CBB646 /* SwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C3948C2BD260C300CBB646 /* SwitchCell.swift */; };
+		C3DA85ED2C0EF2C200B8CD9B /* ThemeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DA85EC2C0EF2C200B8CD9B /* ThemeVC.swift */; };
+		C3DA85EF2C100BA800B8CD9B /* UIApplication+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DA85EE2C100BA800B8CD9B /* UIApplication+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -125,6 +127,8 @@
 		C3BC72FE2BBBFABF00DB2B5B /* TabVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabVC.swift; sourceTree = "<group>"; };
 		C3BC73002BBBFBA100DB2B5B /* SettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingVC.swift; sourceTree = "<group>"; };
 		C3C3948C2BD260C300CBB646 /* SwitchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchCell.swift; sourceTree = "<group>"; };
+		C3DA85EC2C0EF2C200B8CD9B /* ThemeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeVC.swift; sourceTree = "<group>"; };
+		C3DA85EE2C100BA800B8CD9B /* UIApplication+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -207,10 +211,8 @@
 				C3DA85E72C0DCA1B00B8CD9B /* AuthVC */,
 				C39A8F852BAD29A40009524C /* EditVC */,
 				C39B60DA2BAD80B800E90D90 /* AlbumVC */,
-				39D24D97262830560059A389 /* PhotoVC */,
-				39DB154B262D68DE00006D45 /* PhotoDetailVC.swift */,
-				C39B60DB2BB12B3A00E90D90 /* PhotoInfoVC.swift */,
-				C3BC73002BBBFBA100DB2B5B /* SettingVC.swift */,
+				39D24D97262830560059A389 /* Photos */,
+				C3DA85EB2C0EF28A00B8CD9B /* Settings */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -288,14 +290,16 @@
 			path = Base;
 			sourceTree = "<group>";
 		};
-		39D24D97262830560059A389 /* PhotoVC */ = {
+		39D24D97262830560059A389 /* Photos */ = {
 			isa = PBXGroup;
 			children = (
 				39D24DBE262831E60059A389 /* PhotoCell */,
 				39D24D99262830560059A389 /* PhotoVC.swift */,
 				39D24D98262830560059A389 /* PhotoVC+ImagePicker.swift */,
+				39DB154B262D68DE00006D45 /* PhotoDetailVC.swift */,
+				C39B60DB2BB12B3A00E90D90 /* PhotoInfoVC.swift */,
 			);
-			path = PhotoVC;
+			path = Photos;
 			sourceTree = "<group>";
 		};
 		39D24D9F262830890059A389 /* UIKit */ = {
@@ -304,6 +308,7 @@
 				39D24DA0262830890059A389 /* UIColor+Extension.swift */,
 				39D24DA1262830890059A389 /* UIView+Extension.swift */,
 				39D24DA3262830890059A389 /* UIViewController+Extension.swift */,
+				C3DA85EE2C100BA800B8CD9B /* UIApplication+Extension.swift */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
@@ -419,6 +424,15 @@
 				C3B798422BA9A11300D98EAF /* PinCodeView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		C3DA85EB2C0EF28A00B8CD9B /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				C3BC73002BBBFBA100DB2B5B /* SettingVC.swift */,
+				C3DA85EC2C0EF2C200B8CD9B /* ThemeVC.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		F4B24CC95DE4360DA8B09F8D /* Pods */ = {
@@ -620,6 +634,8 @@
 				39D24D9A262830560059A389 /* BaseVC.swift in Sources */,
 				047104AC25F72D6A0095DA74 /* PhotoCellViewModel.swift in Sources */,
 				047104AF25F72E6A0095DA74 /* Album.swift in Sources */,
+				C3DA85ED2C0EF2C200B8CD9B /* ThemeVC.swift in Sources */,
+				C3DA85EF2C100BA800B8CD9B /* UIApplication+Extension.swift in Sources */,
 				047103EB25F1D3C50095DA74 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

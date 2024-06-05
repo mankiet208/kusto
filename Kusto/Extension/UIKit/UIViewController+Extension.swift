@@ -39,18 +39,3 @@ extension UIViewController {
         }
     }
 }
-
-extension UIViewController {
-    
-    var theme: Theme {
-        get {
-            return isDarkMode ? Theme.dark : Theme.light
-        }
-    }
-    
-    var isDarkMode: Bool {
-        get {
-            return traitCollection.userInterfaceStyle == .dark
-        }
-    }
-}

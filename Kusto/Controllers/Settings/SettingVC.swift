@@ -94,6 +94,18 @@ class SettingVC: BaseVC {
         tbvSettings.tableFooterView = lblFooter
         tbvSettings.register(UITableViewCell.self, forCellReuseIdentifier: "UITableViewCell")
         tbvSettings.register(SwitchCell.self, forCellReuseIdentifier: SwitchCell.identifider)
+        
+        view.backgroundColor = theme.background
+        tbvSettings.backgroundColor = theme.background
+        
+        setThemeColor()
+    }
+    
+    public func setThemeColor() {
+        view.backgroundColor = theme.background
+        tbvSettings.backgroundColor = theme.background
+        tbvSettings.separatorColor = .clear
+        tbvSettings.reloadData()
     }
 }
 
@@ -134,7 +146,9 @@ extension SettingVC: UITableViewDataSource {
         // Configure content.
         content.prefersSideBySideTextAndSecondaryText = true
         content.image = UIImage(systemName: item.icon)
+        content.imageProperties.tintColor = theme.onBackground
         content.text = item.text
+        content.textProperties.color = theme.text
         
         content.secondaryTextProperties.font = UIFont.systemFont(ofSize: 17)
         content.secondaryTextProperties.color = .gray
@@ -150,6 +164,10 @@ extension SettingVC: UITableViewDataSource {
 }
 
 extension SettingVC: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.backgroundColor = .clear
+    }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         return UIView(frame: CGRectMake(0, 0, tableView.bounds.size.width, 20))
@@ -171,6 +189,9 @@ extension SettingVC: UITableViewDelegate {
                                     actions: [])
                 return
             }
+        case .theme:
+            let themeVC = ThemeVC()
+            push(themeVC, hideBottomBar: true)
         default: ()
         }
     }
