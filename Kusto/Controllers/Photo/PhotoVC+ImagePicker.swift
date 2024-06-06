@@ -10,6 +10,7 @@ import Photos
 import BSImagePicker
 
 extension PhotoVC {
+    
     func showImagePicker() {
         let imagePicker = ImagePickerController()
         
@@ -26,7 +27,7 @@ extension PhotoVC {
             SpinnerVC.show(on: self)
             
             DispatchQueue.background {
-                self.updateImageStorage(images: images)
+                self.addPhotos(images: images)
             } completion: {
                 SpinnerVC.hide()
                 
@@ -61,30 +62,5 @@ extension PhotoVC {
             }
         }
         return arrImages
-    }
-    
-    func updateImageStorage(images: [UIImage]) {
-        guard let album = album,
-              let albumIndex = album.index else {
-            return
-        }
-        for image in images {
-            let imageId = UUID().uuidString
-            let imagePath = UIImage.getDocumentsDirectory().appendingPathComponent(imageId)
-                    
-            // Write photo to documents directory
-            if let data = image.jpegData(compressionQuality: 0.8) {
-                try? data.write(to: imagePath)
-            }
-            
-            // Update album model in UserDefaults
-            let photo = Photo(
-                id: imageId,
-                albumId: album.id
-            )
-            photo.saveThumbnail(with: image)
-            photos.append(photo)
-            UserDefaultsStore.listAlbum[albumIndex].photos.append(photo)
-        }
     }
 }

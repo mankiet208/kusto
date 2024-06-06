@@ -56,6 +56,10 @@
 		C39B60E42BB2CBE500E90D90 /* CustomModalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39B60E32BB2CBE500E90D90 /* CustomModalVC.swift */; };
 		C39B60FA2BB57C4300E90D90 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C39B60F92BB57C4300E90D90 /* GoogleService-Info.plist */; };
 		C3AF23912C1053530030E08E /* ChangePinVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3AF23902C1053530030E08E /* ChangePinVC.swift */; };
+		C3AF23932C119C6D0030E08E /* PhotoVC+Logic.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3AF23922C119C6D0030E08E /* PhotoVC+Logic.swift */; };
+		C3AF23952C119FF30030E08E /* PhotoVC+CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3AF23942C119FF30030E08E /* PhotoVC+CollectionView.swift */; };
+		C3AF23972C11A0480030E08E /* PhotoVC+Viewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3AF23962C11A0480030E08E /* PhotoVC+Viewer.swift */; };
+		C3AF23992C11A0A00030E08E /* PhotoVC+Toolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3AF23982C11A0A00030E08E /* PhotoVC+Toolbar.swift */; };
 		C3B7982E2BA8418200D98EAF /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B7982D2BA8418200D98EAF /* Theme.swift */; };
 		C3B798302BA8497700D98EAF /* ToolBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B7982F2BA8497700D98EAF /* ToolBarView.swift */; };
 		C3B7983C2BA945B300D98EAF /* AuthVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B7983B2BA945B300D98EAF /* AuthVC.swift */; };
@@ -118,6 +122,10 @@
 		C39B60E32BB2CBE500E90D90 /* CustomModalVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomModalVC.swift; sourceTree = "<group>"; };
 		C39B60F92BB57C4300E90D90 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C3AF23902C1053530030E08E /* ChangePinVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePinVC.swift; sourceTree = "<group>"; };
+		C3AF23922C119C6D0030E08E /* PhotoVC+Logic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotoVC+Logic.swift"; sourceTree = "<group>"; };
+		C3AF23942C119FF30030E08E /* PhotoVC+CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotoVC+CollectionView.swift"; sourceTree = "<group>"; };
+		C3AF23962C11A0480030E08E /* PhotoVC+Viewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotoVC+Viewer.swift"; sourceTree = "<group>"; };
+		C3AF23982C11A0A00030E08E /* PhotoVC+Toolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotoVC+Toolbar.swift"; sourceTree = "<group>"; };
 		C3B7982D2BA8418200D98EAF /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		C3B7982F2BA8497700D98EAF /* ToolBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolBarView.swift; sourceTree = "<group>"; };
 		C3B7983B2BA945B300D98EAF /* AuthVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthVC.swift; sourceTree = "<group>"; };
@@ -293,8 +301,12 @@
 			children = (
 				39D24DBE262831E60059A389 /* PhotoCell */,
 				39D24D99262830560059A389 /* PhotoVC.swift */,
-				39DB154B262D68DE00006D45 /* PhotoDetailVC.swift */,
+				C3AF23922C119C6D0030E08E /* PhotoVC+Logic.swift */,
+				C3AF23942C119FF30030E08E /* PhotoVC+CollectionView.swift */,
 				39D24D98262830560059A389 /* PhotoVC+ImagePicker.swift */,
+				C3AF23962C11A0480030E08E /* PhotoVC+Viewer.swift */,
+				C3AF23982C11A0A00030E08E /* PhotoVC+Toolbar.swift */,
+				39DB154B262D68DE00006D45 /* PhotoDetailVC.swift */,
 				C39B60DB2BB12B3A00E90D90 /* PhotoInfoVC.swift */,
 			);
 			path = Photo;
@@ -588,6 +600,7 @@
 				047104A025F726DD0095DA74 /* UserDefaults+Extension.swift in Sources */,
 				39D24DC1262831E60059A389 /* PhotoCell.swift in Sources */,
 				C3BC73012BBBFBA100DB2B5B /* SettingVC.swift in Sources */,
+				C3AF23992C11A0A00030E08E /* PhotoVC+Toolbar.swift in Sources */,
 				39D24DB6262830DD0059A389 /* Logger.swift in Sources */,
 				047103E925F1D3C50095DA74 /* AppDelegate.swift in Sources */,
 				C35CFF232BAA9FA000E4965D /* KeychainItemAccessibility.swift in Sources */,
@@ -607,6 +620,7 @@
 				39D24DAD262830CA0059A389 /* Date+Extension.swift in Sources */,
 				39D24DC8262834D50059A389 /* SpinnerView.swift in Sources */,
 				C3B798302BA8497700D98EAF /* ToolBarView.swift in Sources */,
+				C3AF23972C11A0480030E08E /* PhotoVC+Viewer.swift in Sources */,
 				C35CFF252BAA9FB800E4965D /* KeychainWrapper.swift in Sources */,
 				0471042325F224010095DA74 /* AlbumCell.swift in Sources */,
 				C39A8F7B2BABD9110009524C /* PermissionHelper.swift in Sources */,
@@ -621,6 +635,7 @@
 				39D24DA4262830890059A389 /* UIColor+Extension.swift in Sources */,
 				39D24DB7262830DD0059A389 /* UserDefaultsWrapper.swift in Sources */,
 				39D24D9B262830560059A389 /* PhotoVC+ImagePicker.swift in Sources */,
+				C3AF23952C119FF30030E08E /* PhotoVC+CollectionView.swift in Sources */,
 				C3BC72FF2BBBFABF00DB2B5B /* TabVC.swift in Sources */,
 				C39B60E02BB1354400E90D90 /* Collection+Extension.swift in Sources */,
 				047104A525F727FB0095DA74 /* Photo.swift in Sources */,
@@ -628,6 +643,7 @@
 				C3B7983E2BA96F3C00D98EAF /* KeyboardView.swift in Sources */,
 				C3B798412BA9783D00D98EAF /* KeyboardCell.swift in Sources */,
 				047104BF25F7625E0095DA74 /* CollectionViewDataSource.swift in Sources */,
+				C3AF23932C119C6D0030E08E /* PhotoVC+Logic.swift in Sources */,
 				39D24DC7262834D50059A389 /* AlertView.swift in Sources */,
 				39D24D9A262830560059A389 /* BaseVC.swift in Sources */,
 				047104AC25F72D6A0095DA74 /* PhotoCellViewModel.swift in Sources */,
