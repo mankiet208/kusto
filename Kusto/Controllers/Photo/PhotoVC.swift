@@ -17,7 +17,7 @@ protocol PhotoVCDelegate: AnyObject {
 }
 
 class PhotoVC: BaseVC {
-    
+
     //MARK: - CONSTANTS
     
     private let viewBottomConstraint: CGFloat = 80

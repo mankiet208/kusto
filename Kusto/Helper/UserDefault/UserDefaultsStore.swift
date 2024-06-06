@@ -2,7 +2,7 @@
 //  UserDefaultsStore.swift
 //  Kusto
 //
-//  Created by Mac on 3/10/21.
+//  Created by Kiet Truong on 3/10/21.
 //
 
 import Foundation

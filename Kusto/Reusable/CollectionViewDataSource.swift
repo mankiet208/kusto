@@ -2,7 +2,7 @@
 //  CollectionViewDataSource.swift
 //  Kusto
 //
-//  Created by Mac on 3/9/21.
+//  Created by Kiet Truong on 3/9/21.
 //
 
 import UIKit
