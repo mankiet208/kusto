@@ -14,42 +14,47 @@ extension PhotoVC {
     func showImagePicker() {
         let imagePicker = ImagePickerController()
         
-        presentImagePicker(imagePicker, select: { (asset) in
-            // User selected an asset. Do something with it. Perhaps begin processing/upload?
-        }, deselect: { (asset) in
-            // User deselected an asset. Cancel whatever you did when asset was selected.
-        }, cancel: { (assets) in
-            // User canceled selection.
-        }, finish: { (assets) in
+        presentImagePicker(
+            imagePicker,
+            select: { (asset) in
+                // User selected an asset. Do something with it. Perhaps begin processing/upload?
+            }, deselect: { (asset) in
+                // User deselected an asset. Cancel whatever you did when asset was selected.
+            }, cancel: { (assets) in
+                // User canceled selection.
+            }, finish: { (assets: [PHAsset]) in
             // User finished selection assets.
-            let images = self.getImageFromAsset(assets: assets)
-            
-            SpinnerVC.show(on: self)
-            
-            DispatchQueue.background {
-                self.addPhotos(images: images)
-            } completion: {
-                SpinnerVC.hide()
+                let images: [UIImage] = self.getImageFromAsset(assets: assets)
                 
-                // Update UI
-                self.clvPhoto.reloadData()
+                SpinnerVC.show(on: self)
                 
-                // TODO: Remove import photo in library
-                
-                // TODO: Prompt user to remove photo in trash
-                
-                // Update album
-                self.delegate?.didUpdatePhotos(in: self.album)
+                DispatchQueue.background {
+                    self.addPhotos(images: images)
+                } completion: {
+                    SpinnerVC.hide()
+                    
+                    // Update UI
+                    self.clvPhoto.reloadData()
+                    
+                    // Update album
+                    self.delegate?.didUpdatePhotos(in: self.album)
+                    
+                    // Delete photos in Photos app
+                    self.promptToDeleteInPhotosApp(assets)
+                }
             }
-        })
+        )
     }
     
     private func getImageFromAsset(assets: [PHAsset]) -> [UIImage] {
         var arrImages = [UIImage]()
+        
         for asset in assets {
             let manager = PHImageManager.default()
             let option = PHImageRequestOptions()
+            
             option.isSynchronous = true
+            
             manager.requestImage(
                 for: asset,
                 targetSize: PHImageManagerMaximumSize,
@@ -61,6 +66,33 @@ extension PhotoVC {
                 }
             }
         }
+        
         return arrImages
+    }
+    
+    private func promptToDeleteInPhotosApp(_ assets: [PHAsset], completionHandler: (() -> Void)? = nil) {
+        AlertView.showAlert(
+            self,
+            title: "Delete photos?",
+            message: "This action will delete photos in iOS Photos app",
+            actions: [
+                UIAlertAction(title: "Cancel", style: .default, handler: { _ in
+                    completionHandler?()
+                }),
+                
+                UIAlertAction(title: "OK", style: .default, handler: { _ in
+                    PHPhotoLibrary.shared().performChanges({
+                        PHAssetChangeRequest.deleteAssets(assets as NSFastEnumeration)
+                    }) { success, error in
+                        if success {
+                            print("success")
+                        } else {
+                            print(error!)
+                        }
+                        completionHandler?()
+                    }
+                })
+            ]
+        )
     }
 }
