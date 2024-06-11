@@ -72,7 +72,7 @@ extension PhotoVC: PhotoViewerHeaderViewDelegate {
                 let imgData = rendered.makeOptimizedForSharingData(dataType: .png)
                 image = UIImage(data: imgData)
             } catch {
-                Logger.log(.error, error.localizedDescription)
+                Logger.error(error.localizedDescription)
             }
             
             if let image = image {

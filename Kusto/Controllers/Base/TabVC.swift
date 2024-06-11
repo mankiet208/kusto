@@ -25,10 +25,10 @@ class TabVC: UITabBarController {
     }
     
     private func setupViewControllers() {
-        let tabBarItem_1 = UITabBarItem(title: "Album",
+        let tabBarItem_1 = UITabBarItem(title: LocalizationKey.album.localized(),
                                         image: UIImage(systemName: "house"),
                                         selectedImage: UIImage(systemName: "house.fill"))
-        let tabBarItem_2 = UITabBarItem(title: "Settings",
+        let tabBarItem_2 = UITabBarItem(title: LocalizationKey.settings.localized(),
                                         image: UIImage(systemName: "gearshape"),
                                         selectedImage: UIImage(systemName: "gearshape.fill"))
         

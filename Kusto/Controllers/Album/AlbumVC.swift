@@ -32,6 +32,8 @@ class AlbumVC: BaseVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        title = LocalizationKey.album.localized()
+        
         setupView()
         applyTheme()
     }
@@ -45,8 +47,6 @@ class AlbumVC: BaseVC {
     //MARK: - PRIVATE
     
     private func setupView() {
-        title = "Album"
-        
         view.addSubview(tbvAlbum)
         
         tbvAlbum.pinEdgesToSuperView(useSafeLayoutGuide: true)
@@ -64,20 +64,22 @@ class AlbumVC: BaseVC {
     
     @objc private func didTapRightBarButton() {
         let alertVC = UIAlertController(
-            title: "Add album",
-            message: "Input album name",
+            title: LocalizationKey.addAlbumTitle.localized(),
+            message: LocalizationKey.addAlbumMessage.localized(),
             preferredStyle: .alert
         )
         alertVC.addTextField { textField in
-            textField.placeholder = "Album name"
+            textField.placeholder = LocalizationKey.albumName.localized()
         }
-        let saveAction = UIAlertAction(title: "OK", style: .default) { [weak self, weak alertVC] action in
+        let saveAction = UIAlertAction(title: LocalizationKey.ok.localized(),
+                                       style: .default) { [weak self, weak alertVC] action in
             guard let text = alertVC?.textFields?.first?.text else {
                 return
             }
             self?.addAlbum(with: text)
         }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: LocalizationKey.cancel.localized(),
+                                         style: .cancel, handler: nil)
         
         alertVC.addAction(saveAction)
         alertVC.addAction(cancelAction)
@@ -95,18 +97,19 @@ class AlbumVC: BaseVC {
         tbvAlbum.reloadData()
     }
     
-    private func removeAlbum(at indexPath: IndexPath) {
+    private func deleteAlbum(at indexPath: IndexPath) {
         guard !albums.isEmpty else {
             return
         }
         let album = albums[indexPath.row]
         
         let alertVC = UIAlertController(
-            title: "Delete \"\(album.name)\"",
-            message: "Are you sure you want to delete the album \"\(album.name)\"?",
+            title: LocalizationKey.deleteAlbumTitle.localized(),
+            message: LocalizationKey.deleteAlbumMessage.localized(["\"\(album.name)\""]),
             preferredStyle: .actionSheet
         )
-        let deleteAction = UIAlertAction(title: "Delete Album", style: .destructive) { [weak self] action in
+        let deleteAction = UIAlertAction(title: LocalizationKey.delete.localized(),
+                                         style: .destructive) { [weak self] action in
             guard let self = self else {
                 return
             }
@@ -114,7 +117,8 @@ class AlbumVC: BaseVC {
             self.tbvAlbum.deleteRows(at: [indexPath], with: .fade)
             UserDefaultsStore.listAlbum.remove(at: indexPath.row)
         }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        let cancelAction = UIAlertAction(title: LocalizationKey.cancel.localized(),
+                                         style: .cancel)
         
         alertVC.addAction(deleteAction)
         alertVC.addAction(cancelAction)
@@ -175,7 +179,7 @@ extension AlbumVC: UITableViewDelegate {
             return
         }
         if editingStyle == .delete {
-            removeAlbum(at: indexPath)
+            deleteAlbum(at: indexPath)
         } else if editingStyle == .insert {
             
         }

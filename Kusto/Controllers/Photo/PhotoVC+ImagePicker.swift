@@ -39,8 +39,8 @@ extension PhotoVC {
                     // Update album
                     self.delegate?.didUpdatePhotos(in: self.album)
                     
-                    // Delete photos in Photos app
-                    self.promptToDeleteInPhotosApp(assets)
+                    // Delete original photos in Photos app
+                    self.promptToDeleteOriginalPhoto(assets)
                 }
             }
         )
@@ -70,17 +70,20 @@ extension PhotoVC {
         return arrImages
     }
     
-    private func promptToDeleteInPhotosApp(_ assets: [PHAsset], completionHandler: (() -> Void)? = nil) {
+    private func promptToDeleteOriginalPhoto(_ assets: [PHAsset], completionHandler: (() -> Void)? = nil) {
         AlertView.showAlert(
             self,
-            title: "Delete photos?",
-            message: "This action will delete photos in iOS Photos app",
+            title: LocalizationKey.deleteOriginPhotosTitle.localized(),
+            message: LocalizationKey.deleteOriginPhotosMessage.localized(),
             actions: [
-                UIAlertAction(title: "Cancel", style: .default, handler: { _ in
+                UIAlertAction(title: LocalizationKey.cancel.localized(),
+                              style: .default, handler: { _ in
                     completionHandler?()
                 }),
                 
-                UIAlertAction(title: "OK", style: .default, handler: { _ in
+                UIAlertAction(title: LocalizationKey.ok.localized(),
+                              style: .default, handler: { _ in
+                                  
                     PHPhotoLibrary.shared().performChanges({
                         PHAssetChangeRequest.deleteAssets(assets as NSFastEnumeration)
                     }) { success, error in
@@ -91,6 +94,7 @@ extension PhotoVC {
                         }
                         completionHandler?()
                     }
+                                  
                 })
             ]
         )

@@ -43,7 +43,7 @@ class PhotoVC: BaseVC {
         let toolBar = ToolBarView()
         toolBar.delegate = self
         toolBar.isViewerFooter = false
-        toolBar.setTitle("0 Photo Selected")
+        toolBar.setTitle(LocalizationKey.numSelectedPhoto.localized(["0"]))
         return toolBar
     }()
     
@@ -110,7 +110,7 @@ class PhotoVC: BaseVC {
     
     var selectedIndex = [IndexPath]() {
         didSet {
-            let barTitle = "\(selectedIndex.count) Photo Selected"
+            let barTitle = LocalizationKey.numSelectedPhoto.localized(["\(selectedIndex.count)"])
             vwToolBar.setTitle(barTitle)
             vwToolBar.setItems(selectedIndex)
         }
@@ -267,11 +267,11 @@ extension PhotoVC {
             } else {
                 AlertView.showAlert(
                     self,
-                    title: "Need Photos permission",
-                    message: "Please turn on Photos permission in app settings",
+                    title: LocalizationKey.photosPermisionTitle.localized(),
+                    message: LocalizationKey.photosPermissionMessage.localized(),
                     actions: [
-                        UIAlertAction(title: "Cancel", style: .default, handler: nil),
-                        UIAlertAction(title: "Settings", style: .default, handler: { _ in
+                        UIAlertAction(title: LocalizationKey.cancel.localized(), style: .default, handler: nil),
+                        UIAlertAction(title: LocalizationKey.openSettings.localized(), style: .default, handler: { _ in
                             PermissionHelper.shared.openSettings()
                         })
                     ]

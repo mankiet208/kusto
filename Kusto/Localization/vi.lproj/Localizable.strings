@@ -1,0 +1,55 @@
+/* 
+  Localizable.strings
+  Kusto
+
+  Created by Kiet Truong on 10/06/2024.
+  
+*/
+
+// General
+"ok" = "OK";
+"cancel" = "Hủy";
+"reset" = "Cài đặt lại";
+"delete" = "Xóa";
+"edit" = "Sửa";
+"open_settings" = "Cài đặt";
+"are_you_sure" = "Bạn chắc chứ?";
+"size" = "Kích thước";
+"format" = "Định dạng";
+"info" = "Thông tin";
+
+// Auth
+"please_enter_your_pin" = "Vui lòng nhập PIN";
+"please_setup_your_pin" = "Vui long cài đặt PIN";
+"biometric_enroll_title" = "Chưa cài đặt sinh trăc học";
+"biometric_enroll_message" = "Vui lòng cài đặt vân tay/khuôn mặt";
+"change_your_pin" = "Thay đổi mã PIN";
+"choose_new_pin" = "Vui lòng chọn mã PIN mới";
+"pin_has_changed" = "Mã PIN đã đổi";
+
+// Title
+"album" = "Bộ ảnh";
+"settings" = "Cài đặt";
+
+// Album
+"main_album" = "Bộ ảnh chính";
+"album_name" = "Tên bộ ảnh";
+"add_album_title" = "Thêm bộ ảnh";
+"add_album_message" = "Vui lòng nhập tên";
+"delete_album_title" = "Xóa bộ ảnh";
+"delete_album_message" = "Bạn chắc chắn muốn xóa %@?";
+
+// Photos
+"num_selected_photo" = "%@ ảnh";
+"photos_permission_title" = "Cần cấp phép dùng Photos";
+"photos_permission_message" = "Vui lòng mở cài đặt và cấp phép dùng Photos";
+"delete_origin_photos_title" = " Xóa ảnh gốc?";
+"delete_origin_photos_message" = "Hành động này sẽ xóa ảnh gốc trong ứng dụng Photos";
+"delete_photos_title" = "Xóa ảnh";
+"delete_photos_message" = "Bạn có chắc muốn xóa?";
+
+// Setting
+"biometric" = "Sinh trắc học";
+"change_pin_code" = "Đổi mã PIN";
+"share_app" = "Chia sẻ ứng dụng";
+"version" = "phiên bản";

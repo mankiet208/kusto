@@ -15,9 +15,10 @@ enum LogType: String{
 }
 
 
-class Logger {
+struct Logger {
     
-    static func log(_ logType: LogType, _ message: String) {
+    static func log(_ logType: LogType, message: String) {
+        #if DEBUG
         switch logType {
         case .error:
             print("\n🔥 Error: \(message)\n")
@@ -28,5 +29,22 @@ class Logger {
         case .debug:
             print("\nℹ️ Debug: \(message)\n")
         }
+        #endif
+    }
+    
+    static func error(_ message: String) {
+        log(.error, message: message)
+    }
+    
+    static func warning(_ message: String) {
+        log(.warning, message: message)
+    }
+    
+    static func success(_ message: String) {
+        log(.success, message: message)
+    }
+    
+    static func debug(_ message: String) {
+        log(.debug, message: message)
     }
 }

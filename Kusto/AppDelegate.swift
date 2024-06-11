@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UserDefaultsStore.hasLaunchBefore = true
             
             // Add default main album
-            UserDefaultsStore.listAlbum.append(Album(name: "Main", photos: []))
+            UserDefaultsStore.listAlbum.append(Album(name: LocalizationKey.mainAlbum.localized(), photos: []))
             
             // Clear keychain
             _ = KeychainWrapper.standard.removeAllKeys()

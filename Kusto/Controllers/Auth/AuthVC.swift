@@ -82,9 +82,9 @@ class AuthVC: BaseVC {
         ])
         
         if myPIN != nil {
-            lblTitle.text = "Enter your PIN"
+            lblTitle.text = LocalizationKey.pleaseEnterYourPin.localized()
         } else {
-            lblTitle.text = "Setup your PIN"
+            lblTitle.text = LocalizationKey.pleaseSetupYourPin.localized()
         }
     }
         
@@ -93,7 +93,7 @@ class AuthVC: BaseVC {
             self.dismiss(animated: true)
         } onError: { error in
             if let error = error {
-                Logger.log(.error, error)
+                Logger.error(error)
             }
         }
     }
@@ -127,7 +127,10 @@ extension AuthVC: KeyboardViewDelegate {
     
     func didTapBiometric() {
         guard BiometricHelper.isEnrolled else {
-            AlertView.showAlert(self, title: "Biometric is not enrolled", message: "Please enable your Face/Touch Id", actions: [])
+            AlertView.showAlert(self,
+                                title: LocalizationKey.biometricEnrollTitle.localized(),
+                                message: LocalizationKey.biometricEnrollMessage.localized(),
+                                actions: [])
             return
         }
         
@@ -136,7 +139,10 @@ extension AuthVC: KeyboardViewDelegate {
         }
         
         if myPIN == nil {
-            AlertView.showAlert(self, title: "", message: "Please setup your PIN", actions: [])
+            AlertView.showAlert(self,
+                                title: "",
+                                message: LocalizationKey.pleaseSetupYourPin.localized(),
+                                actions: [])
         } else {
             showBiometric()
         }
@@ -147,11 +153,11 @@ extension AuthVC: PinCodeViewDelegate {
     
     func onSubmitPin(_ pin: String) {
         if myPIN == nil {
-            AlertView.showAlert(self, title: "Are you sure?", message: nil, actions: [
-                UIAlertAction(title: "Reset", style: .default, handler: { _ in
+            AlertView.showAlert(self, title: LocalizationKey.areYouSure.localized(), message: nil, actions: [
+                UIAlertAction(title: LocalizationKey.reset.localized(), style: .default, handler: { _ in
                     self.pinView.clearPin()
                 }),
-                UIAlertAction(title: "OK", style: .default, handler: { [weak self] _ in
+                UIAlertAction(title: LocalizationKey.ok.localized(), style: .default, handler: { [weak self] _ in
                     self?.confirmPIN(pin)
                 })
             ])
@@ -160,3 +166,4 @@ extension AuthVC: PinCodeViewDelegate {
         }
     }
 }
+

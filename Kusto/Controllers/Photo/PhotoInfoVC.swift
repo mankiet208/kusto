@@ -87,10 +87,10 @@ class PhotoInfoVC: UIViewController {
     func setupData(photo: Photo) {
         self.info = Info(photo: photo)
         
-        sizeLabel.text = "Size"
+        sizeLabel.text = LocalizationKey.size.localized()
         sizeValueLabel.text = "\(info.size) KB"
         
-        formatLabel.text = "Format"
+        formatLabel.text = LocalizationKey.forrmat.localized()
         formatValueLabel.text = "\(info.format)"
     }
 }

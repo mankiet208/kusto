@@ -1,0 +1,55 @@
+/* 
+  Localizable.strings
+  Kusto
+
+  Created by Kiet Truong on 10/06/2024.
+  
+*/
+
+// General
+"ok" = "OK";
+"cancel" = "Cancel";
+"reset" = "Reset";
+"delete" = "Delete";
+"edit" = "Edit";
+"open_settings" = "Settings";
+"are_you_sure" = "Are you sure?";
+"size" = "Size";
+"format" = "Format";
+"info" = "Info";
+
+// Auth
+"please_enter_your_pin" = "Please enter your PIN";
+"please_setup_your_pin" = "Please setup your PIN";
+"biometric_enroll_title" = "Biometric is not enrolled";
+"biometric_enroll_message" = "Please enable your Face/Touch Id";
+"change_your_pin" = "Change your PIN";
+"choose_new_pin" = "Please choose a new PIN";
+"pin_has_changed" = "PIN has changed";
+
+// Title
+"album" = "Album";
+"settings" = "Settings";
+
+// Album
+"main_album" = "Main";
+"album_name" = "Album name";
+"add_album_title" = "Add album";
+"add_album_message" = "Input album name";
+"delete_album_title" = "Delete album";
+"delete_album_message" = "Are you sure you want to delete %@?";
+
+// Photos
+"num_selected_photo" = "%@ Photo Selected";
+"photos_permission_title" = "Need Photos permission";
+"photos_permission_message" = "Please turn on Photos permission in app settings";
+"delete_origin_photos_title" = "Delete original photos?";
+"delete_origin_photos_message" = "This action will delete the original photos in Photos app";
+"delete_photos_title" = "Delete photo";
+"delete_photos_message" = "Are you sure you want to delete?";
+
+// Setting
+"biometric" = "Biometric";
+"change_pin_code" = "Change Pin code";
+"share_app" = "Share app";
+"version" = "version";

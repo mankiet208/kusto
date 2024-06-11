@@ -45,6 +45,8 @@ class ChangePinVC: BaseVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        lblTitle.text = LocalizationKey.changeYourPin.localized()
+
         setupView()
         vwKeyboard.delegate = self
         pinView.delegate = self
@@ -53,8 +55,6 @@ class ChangePinVC: BaseVC {
     //MARK: - PRIVATE
     
     private func setupView() {
-        lblTitle.text = "Change your PIN"
-        
         view.addSubview(lblTitle)
         NSLayoutConstraint.activate([
             lblTitle.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -82,8 +82,9 @@ class ChangePinVC: BaseVC {
     private func confirmPIN(_ pin: String) {
         KeychainWrapper.standard.set(pin, forKey: KeychainWrapper.pinCode)
         
-        AlertView.showAlert(self, title: "PIN has changed", message: nil, actions: [
-            UIAlertAction(title: "OK", style: .default, handler: { [weak self] _ in
+        AlertView.showAlert(self, title: LocalizationKey.pinHasChanged.localized(), message: nil, actions: [
+            UIAlertAction(title: LocalizationKey.ok.localized(),
+                          style: .default, handler: { [weak self] _ in
                 self?.pop()
             })
         ])
@@ -108,17 +109,17 @@ extension ChangePinVC: PinCodeViewDelegate {
     func onSubmitPin(_ pin: String) {
         
         if myPIN == pin {
-            AlertView.showAlert(self, title: "Please choose a new PIN", message: nil, actions: [
-                UIAlertAction(title: "OK", style: .default, handler: { [weak self] _ in
+            AlertView.showAlert(self, title: LocalizationKey.chooseNewPin.localized(), message: nil, actions: [
+                UIAlertAction(title: LocalizationKey.ok.localized(), style: .default, handler: { [weak self] _ in
                     self?.pinView.clearPin()
                 })
             ])
         } else {
-            AlertView.showAlert(self, title: "Are you sure?", message: nil, actions: [
-                UIAlertAction(title: "Reset", style: .default, handler: { _ in
+            AlertView.showAlert(self, title: LocalizationKey.areYouSure.localized(), message: nil, actions: [
+                UIAlertAction(title: LocalizationKey.reset.localized(), style: .default, handler: { _ in
                     self.pinView.clearPin()
                 }),
-                UIAlertAction(title: "OK", style: .default, handler: { [weak self] _ in
+                UIAlertAction(title: LocalizationKey.ok.localized(), style: .default, handler: { [weak self] _ in
                     self?.confirmPIN(pin)
                 })
             ])

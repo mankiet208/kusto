@@ -18,11 +18,11 @@ extension SettingItem {
     var text: String {
         switch self {
         case .biometric:
-            return "Biometric"
+            return LocalizationKey.biometric.localized()
         case .changePin:
-            return "Change Pin code"
+            return LocalizationKey.changePinCode.localized()
         case .share:
-            return "Share app"
+            return LocalizationKey.share.localized()
         }
     }
     
@@ -56,7 +56,7 @@ class SettingVC: BaseVC {
     lazy private var lblFooter: UILabel = {
         let label = UILabel()
         label.frame.size = CGSize(width: 40, height: 20)
-        label.text = "Kusto version 1.0.0(1)"
+        label.text = "\(Bundle.main.appName) \(LocalizationKey.version.localized()) \(Bundle.main.appVersionPretty)"
         label.textAlignment = .center
         label.textColor = .gray
         return label
@@ -73,6 +73,8 @@ class SettingVC: BaseVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        title = LocalizationKey.settings.localized()
+
         setupView()
         applyTheme()
     }
@@ -80,8 +82,6 @@ class SettingVC: BaseVC {
     //MARK: - CONFIG
     
     private func setupView() {
-        title = "Settings"
-        
         view.addSubview(tbvSettings)
         tbvSettings.pinEdgesToSuperView(useSafeLayoutGuide: true)
         
@@ -174,8 +174,8 @@ extension SettingVC: UITableViewDelegate {
         case .biometric:
             guard BiometricHelper.isEnrolled else {
                 AlertView.showAlert(self,
-                                    title: "Biometric is not enrolled",
-                                    message: "Please enable your Face/Touch Id",
+                                    title: LocalizationKey.biometricEnrollTitle.localized(),
+                                    message: LocalizationKey.biometricEnrollMessage.localized(),
                                     actions: [])
                 return
             }

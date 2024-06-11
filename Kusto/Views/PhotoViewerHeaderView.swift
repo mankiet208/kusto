@@ -31,7 +31,7 @@ class PhotoViewerHeaderView: UIView {
     
     lazy var editButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.setTitle("Edit", for: .normal)
+        button.setTitle(LocalizationKey.edit.localized(), for: .normal)
         button.setTitleColor(theme.onBackground, for: .normal)
         button.addTarget(self, action: #selector(editAction), for: .touchUpInside)
         return button

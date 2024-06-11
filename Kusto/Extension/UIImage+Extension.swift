@@ -32,7 +32,7 @@ extension UIImage {
                try fileManager.removeItem(at: url)
             }
         } catch {
-            Logger.log(.error, error.localizedDescription)
+            Logger.error(error.localizedDescription)
         }
     }
     
@@ -43,7 +43,7 @@ extension UIImage {
             let photoURL = documentURL.appendingPathComponent(id)
             try fileManager.removeItem(at: photoURL)
         } catch {
-            Logger.log(.error, error.localizedDescription)
+            Logger.error(error.localizedDescription)
         }
       }
     
