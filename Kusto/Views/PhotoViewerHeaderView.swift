@@ -24,7 +24,7 @@ class PhotoViewerHeaderView: UIView {
         
         let button = UIButton(type: .custom)
         button.setImage(tintedImage, for: .normal)
-        button.tintColor = theme.onBackground
+        button.tintColor = theme.primary
         button.addTarget(self, action: #selector(closeAction), for: .touchUpInside)
         return button
     }()
@@ -32,7 +32,7 @@ class PhotoViewerHeaderView: UIView {
     lazy var editButton: UIButton = {
         let button = UIButton(type: .custom)
         button.setTitle(LocalizationKey.edit.localized(), for: .normal)
-        button.setTitleColor(theme.onBackground, for: .normal)
+        button.setTitleColor(theme.primary, for: .normal)
         button.addTarget(self, action: #selector(editAction), for: .touchUpInside)
         return button
     }()

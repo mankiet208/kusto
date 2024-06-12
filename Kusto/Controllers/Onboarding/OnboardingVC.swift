@@ -157,9 +157,27 @@ class OnboardingVC: BaseVC {
         let page2 = PageVC()
         let page3 = PageVC()
         
-        page1.setup(model: OnboardingModel(imageName: "img_placeholder", title: "Title 1", description: "Description 1"))
-        page2.setup(model: OnboardingModel(imageName: "img_placeholder", title: "Title 2", description: "Description 2"))
-        page3.setup(model: OnboardingModel(imageName: "img_placeholder", title: "Title 3", description: "Description 3"))
+        page1.setup(
+            model: OnboardingModel(
+                imageName: "img_placeholder",
+                title: "Secure",
+                description: "Only you can access the photos"
+            )
+        )
+        page2.setup(
+            model: OnboardingModel(
+                imageName: "img_placeholder",
+                title: "Edit your photos",
+                description: "Change size, orientation, filtering and more..."
+            )
+        )
+        page3.setup(
+            model: OnboardingModel(
+                imageName: "img_placeholder",
+                title: "Title 3",
+                description: "Description 3"
+            )
+        )
         
         pageControllers = [page1, page2, page3]
         
