@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -19,7 +18,7 @@
                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t75-LL-clj">
                         <rect key="frame" x="16" y="0.0" width="348" height="96"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="v8u-Js-tOg">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="v8u-Js-tOg">
                                 <rect key="frame" x="0.0" y="0.0" width="96" height="96"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="v8u-Js-tOg" secondAttribute="height" multiplier="1:1" id="D1Q-Vw-zWM"/>
@@ -60,4 +59,7 @@
             <point key="canvasLocation" x="-26.086956521739133" y="-66.294642857142861"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="img_placeholder" width="500" height="500"/>
+    </resources>
 </document>

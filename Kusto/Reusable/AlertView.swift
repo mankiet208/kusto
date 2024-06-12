@@ -8,6 +8,7 @@
 import UIKit
 
 class AlertView: NSObject {
+    
     class func showAlert(
         _ vc: UIViewController,
         title: String?,

@@ -26,7 +26,12 @@ extension PhotoVC: ToolBarViewDelegate {
             message: LocalizationKey.deletePhotosMessage.localized(),
             actions: [
                 UIAlertAction(title: LocalizationKey.cancel.localized(), style: .cancel),
-                UIAlertAction(title: LocalizationKey.cancel.localized(), style: .destructive, handler: { [weak self] _ in
+                
+                UIAlertAction(
+                    title: LocalizationKey.delete.localized(),
+                    style: .destructive,
+                    handler: { [weak self] _ in
+                        
                     self?.deletePhotos(indexPaths)
                     controller.dismiss(animated: true)
                 })

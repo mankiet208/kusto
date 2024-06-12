@@ -28,20 +28,18 @@ extension PhotoVC {
                 
                 SpinnerVC.show(on: self)
                 
-                DispatchQueue.background {
-                    self.addPhotos(images: images)
-                } completion: {
-                    SpinnerVC.hide()
-                    
-                    // Update UI
-                    self.clvPhoto.reloadData()
-                    
-                    // Update album
-                    self.delegate?.didUpdatePhotos(in: self.album)
-                    
-                    // Delete original photos in Photos app
-                    self.promptToDeleteOriginalPhoto(assets)
-                }
+                self.addPhotos(images: images)
+
+                SpinnerVC.hide()
+
+                // Update UI
+                self.clvPhoto.reloadData()
+
+                // Update album
+                self.delegate?.didUpdatePhotos(in: self.album)
+
+                // Delete original photos in Photos app
+                self.promptToDeleteOriginalPhoto(assets)
             }
         )
     }
@@ -76,13 +74,17 @@ extension PhotoVC {
             title: LocalizationKey.deleteOriginPhotosTitle.localized(),
             message: LocalizationKey.deleteOriginPhotosMessage.localized(),
             actions: [
-                UIAlertAction(title: LocalizationKey.cancel.localized(),
-                              style: .default, handler: { _ in
+                UIAlertAction(
+                    title: LocalizationKey.cancel.localized(),
+                    style: .default,
+                    handler: { _ in
                     completionHandler?()
                 }),
                 
-                UIAlertAction(title: LocalizationKey.ok.localized(),
-                              style: .default, handler: { _ in
+                UIAlertAction(
+                    title: LocalizationKey.delete.localized(),
+                    style: .destructive,
+                    handler: { _ in
                                   
                     PHPhotoLibrary.shared().performChanges({
                         PHAssetChangeRequest.deleteAssets(assets as NSFastEnumeration)

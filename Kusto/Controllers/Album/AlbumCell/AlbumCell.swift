@@ -20,7 +20,10 @@ class AlbumCell: UITableViewCell {
     
     func configure(with albumVM: AlbumCellViewModel) {
         lblTitle.text = albumVM.name
-        imvAvatar.image = albumVM.avatarImage
+        
+        if let image = albumVM.avatarImage {
+            imvAvatar.image = image
+        }
     }
 }
 
