@@ -23,10 +23,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // If first launch
         if !UserDefaultsStore.hasLaunchBefore {
-            UserDefaultsStore.hasLaunchBefore = true
             
-            // Add default main album
-            UserDefaultsStore.listAlbum.append(Album(name: LocalizationKey.mainAlbum.localized(), photos: []))
+            if (UserDefaultsStore.listAlbum.count == 0) {
+                // Add default main album
+                UserDefaultsStore.listAlbum.append(Album(name: LocalizationKey.mainAlbum.localized(), photos: []))
+            }
             
             // Clear keychain
             _ = KeychainWrapper.standard.removeAllKeys()

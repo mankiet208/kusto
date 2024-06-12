@@ -72,6 +72,9 @@
 		C3F973412C16F950002CAAA9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C3F973432C16F950002CAAA9 /* Localizable.strings */; };
 		C3F973462C170019002CAAA9 /* LocalizationKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F973452C170019002CAAA9 /* LocalizationKey.swift */; };
 		C3F9734A2C17F40B002CAAA9 /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F973492C17F40B002CAAA9 /* Bundle+Extension.swift */; };
+		C3F9734E2C18322D002CAAA9 /* OnboardingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F9734D2C18322D002CAAA9 /* OnboardingVC.swift */; };
+		C3F973532C18445E002CAAA9 /* OnboardingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F973522C18445E002CAAA9 /* OnboardingModel.swift */; };
+		C3F973552C1855D6002CAAA9 /* PageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F973542C1855D6002CAAA9 /* PageVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -142,6 +145,9 @@
 		C3F973442C16FA1B002CAAA9 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C3F973452C170019002CAAA9 /* LocalizationKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationKey.swift; sourceTree = "<group>"; };
 		C3F973492C17F40B002CAAA9 /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
+		C3F9734D2C18322D002CAAA9 /* OnboardingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingVC.swift; sourceTree = "<group>"; };
+		C3F973522C18445E002CAAA9 /* OnboardingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingModel.swift; sourceTree = "<group>"; };
+		C3F973542C1855D6002CAAA9 /* PageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,6 +208,7 @@
 				047104AE25F72E6A0095DA74 /* Album.swift */,
 				047104A425F727FB0095DA74 /* Photo.swift */,
 				C39B60DD2BB133F500E90D90 /* Info.swift */,
+				C3F973522C18445E002CAAA9 /* OnboardingModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -222,6 +229,7 @@
 			isa = PBXGroup;
 			children = (
 				39D24D95262830560059A389 /* Base */,
+				C3F9734F2C1832A6002CAAA9 /* Onboarding */,
 				C3DA85E72C0DCA1B00B8CD9B /* Auth */,
 				C39B60DA2BAD80B800E90D90 /* Album */,
 				39D24D97262830560059A389 /* Photo */,
@@ -462,6 +470,15 @@
 			path = Localization;
 			sourceTree = "<group>";
 		};
+		C3F9734F2C1832A6002CAAA9 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				C3F9734D2C18322D002CAAA9 /* OnboardingVC.swift */,
+				C3F973542C1855D6002CAAA9 /* PageVC.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
 		F4B24CC95DE4360DA8B09F8D /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -624,6 +641,7 @@
 				39D24DB6262830DD0059A389 /* Logger.swift in Sources */,
 				047103E925F1D3C50095DA74 /* AppDelegate.swift in Sources */,
 				C35CFF232BAA9FA000E4965D /* KeychainItemAccessibility.swift in Sources */,
+				C3F973532C18445E002CAAA9 /* OnboardingModel.swift in Sources */,
 				39D24D9C262830560059A389 /* PhotoVC.swift in Sources */,
 				C35CFF272BAABD4900E4965D /* KeychainKey.swift in Sources */,
 				C35CFF202BAA904700E4965D /* UnderlineTextField.swift in Sources */,
@@ -632,6 +650,7 @@
 				C39B60DC2BB12B3A00E90D90 /* PhotoInfoVC.swift in Sources */,
 				0471040525F1EC2B0095DA74 /* AlbumVC.swift in Sources */,
 				C3B798432BA9A11300D98EAF /* PinCodeView.swift in Sources */,
+				C3F973552C1855D6002CAAA9 /* PageVC.swift in Sources */,
 				C39B60E42BB2CBE500E90D90 /* CustomModalVC.swift in Sources */,
 				C3B7983C2BA945B300D98EAF /* AuthVC.swift in Sources */,
 				C39A8F7F2BAC3AA30009524C /* BiometricHelper.swift in Sources */,
@@ -657,6 +676,7 @@
 				39D24DB7262830DD0059A389 /* UserDefaultsWrapper.swift in Sources */,
 				39D24D9B262830560059A389 /* PhotoVC+ImagePicker.swift in Sources */,
 				C3AF23952C119FF30030E08E /* PhotoVC+CollectionView.swift in Sources */,
+				C3F9734E2C18322D002CAAA9 /* OnboardingVC.swift in Sources */,
 				C3BC72FF2BBBFABF00DB2B5B /* TabVC.swift in Sources */,
 				C39B60E02BB1354400E90D90 /* Collection+Extension.swift in Sources */,
 				C3F9734A2C17F40B002CAAA9 /* Bundle+Extension.swift in Sources */,

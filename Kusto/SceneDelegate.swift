@@ -19,11 +19,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
-        let tabVC = TabVC()
+        var rootVC: UIViewController!
+        
+        if UserDefaultsStore.hasLaunchBefore {
+            rootVC = TabVC()
+        } else {
+            rootVC = OnboardingVC()
+        }
         
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-        window?.rootViewController = tabVC
+        window?.rootViewController = rootVC
         window?.makeKeyAndVisible()
     }
     
@@ -49,10 +55,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to undo the changes made on entering the background.
         
         // Show authentication screen
-        let authVC = AuthVC()
-        authVC.modalPresentationStyle = .fullScreen
+        if UserDefaultsStore.hasLaunchBefore {
+            let vc = AuthVC()
+            vc.modalPresentationStyle = .fullScreen
 
-        window?.rootViewController!.present(authVC, animated: false, completion: nil)
+            window?.rootViewController!.present(vc, animated: false)
+        }
     }
     
     func sceneDidEnterBackground(_ scene: UIScene) {
